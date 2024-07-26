@@ -25,7 +25,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li> 
-                <li class="item">
+                <li class="item @yield('yarn_purchase_system_select')">
                     <a href="#" class="link" aria-expanded="true"> 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <g clip-path="url(#clip0_1100_5971)">
@@ -44,8 +44,8 @@
                         <span>Yarn Purchase System</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="true">
-                        <li class="item"><a href="vendor.html" class="link  pt-lg-0 mt-lg-3 inner_active">Vendor</a></li> 
-                        <li class="item"><a href="yarn_products.html" class="link ">Yarn Product</a></li>  
+                        <li class="item"><a href="{{ route('admin.vendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('yarn_vendor_select')">Vendor</a></li> 
+                        <li class="item"><a href="{{ route('admin.product') }}" class="link @yield('yarn_product_select')">Yarn Product</a></li>  
                         <li class="item"><a href="po_form.html" class="link ">PO Form</a></li>  
                         <li class="item"><a href="inward.html" class="link ">Inward</a></li>  
                         <li class="item"><a href="sales_return.html" class="link ">Sales Return</a></li>  
@@ -212,8 +212,8 @@
                         <span>Reminder</span>
                     </a>
                 </li>
-                <li class="item ">
-                    <a href="https://tarwalas.in/myts/admin/customer" class="link"> 
+                <li class="item @yield('user_select')">
+                    <a href="{{ route('admin.user') }}" class="link"> 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <g clip-path="url(#clip0_1105_6109)">
                             <path d="M23.987 23.9896C15.9845 23.9896 8.02413 23.9896 0.0286656 23.9896C0.0216398 23.8561 0.00758797 23.7296 0.00758797 23.6031C0.00758797 22.8795 -0.0134897 22.1488 0.0146139 21.4251C0.0286656 21.137 0.10595 20.8209 0.26052 20.582C1.67272 18.3829 3.6751 16.9285 6.09201 16.0152C8.7197 15.0175 11.4457 14.8348 14.2139 15.1369C16.6098 15.3969 18.844 16.1487 20.8253 17.5538C22.0197 18.404 23.0455 19.4227 23.8043 20.6874C23.9167 20.8771 23.9799 21.123 23.987 21.3408C24.008 22.0996 23.994 22.8654 23.994 23.6242C24.008 23.7296 23.994 23.849 23.987 23.9896Z" fill="#3C4C5B"/>
