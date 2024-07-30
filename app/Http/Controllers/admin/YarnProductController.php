@@ -35,7 +35,7 @@ class YarnProductController extends Controller
           
             $result['id']=$arr->id;
 
-            $result['getProdVendors'] = YarnProductVendor::where('yarn_product_id', $id)->get();
+            $result['product_record'] = YarnProductVendor::where('yarn_product_id', $id)->where('is_deleted',0)->get();
             
         }else{
             $result['skt_yarn_name']='';
@@ -45,16 +45,11 @@ class YarnProductController extends Controller
             
             $result['id']=0;
 
-            $result['getProdVendors'] = [];
+            $result['product_record'] = [];
         }
         $result['getVendors'] = YarnVendor::where('is_deleted', 0)->where('status', 1)->get();
 
-        if($id>0){
-            return view('admin.yarn_product.edit_product',$result);
-        }else{
-            return view('admin.yarn_product.add_product',$result);
-        }
-        
+        return view('admin.yarn_product.add_product',$result);
     }
 
     public function manage_product_process(Request $request)
@@ -66,72 +61,95 @@ class YarnProductController extends Controller
         ]);
         
         if ($validator->fails()) {
-            echo json_encode(array('status'=>0,'message'=>$validator->errors()->first()));
+            echo json_encode(['status' => 0, 'message' => $validator->errors()->first()]);
             return;
-        }    
-        
+        }
+
         try {
-
-            if($request->post('id')>0){
-                $model=YarnProduct::find($request->post('id'));
+            if ($request->post('id') > 0) {
+                $model = YarnProduct::find($request->post('id'));
                 $model->updated_by = session('ADMIN_ID');
-                $model->updated_at=date('Y-m-d H:i:s');
-                $msg="Yarn Product updated";
-
-            }else{
-                $model=new YarnProduct();
+                $model->updated_at = date('Y-m-d H:i:s');
+                $msg = "Yarn Product updated";
+            } else {
+                $model = new YarnProduct();
                 $model->created_by = session('ADMIN_ID');
-                $model->created_at=date('Y-m-d H:i:s');
-                $msg="Yarn Product inserted";
+                $model->created_at = date('Y-m-d H:i:s');
+                $msg = "Yarn Product inserted";
             }
             
-            $model->skt_yarn_name=$request->post('skt_yarn_name'); 
-            $model->gst=$request->post('gst');
-            $model->hsn_code=$request->post('hsn_code');  
-            $model->status=$request->post('status'); 
+            $model->skt_yarn_name = $request->post('skt_yarn_name'); 
+            $model->gst = $request->post('gst');
+            $model->hsn_code = $request->post('hsn_code');  
+            $model->status = $request->post('status'); 
         
             $model->save();
             
-            // Handle YarnProductVendor
-            $vendorIds = $request->post('yarn_vendor_id', []);
-            $vendorNames = $request->post('vendor_yarn_name', []);
-            $deniers = $request->post('denier', []);
-            
-            foreach ($vendorIds as $index => $vendorId) {
-                $vendor = new YarnProductVendor();
-                $vendor->yarn_product_id = $model->id; // Link to the YarnProduct
-                $vendor->yarn_vendor_id = $vendorId;
-                $vendor->vendor_yarn_name = $vendorNames[$index];
-                $vendor->denier = $deniers[$index];
-                $vendor->status = $request->post('status');
-                $vendor->save();
-                
-                // Handle YarnProductVendorDetail
-                $shadeNos = $request->post('shade_no', []);
-                $colors = $request->post('color', []);
-                $moqs = $request->post('moq', []);
-                
-                foreach ($shadeNos as $detailIndex => $shadeNo) {
-                    if (isset($colors[$detailIndex]) && isset($moqs[$detailIndex])) {
-                        $detail = new YarnProductVendorDetail();
-                        $detail->yarn_product_id = $model->id;
-                        $detail->yarn_product_vendor_id = $vendor->id; // Link to YarnProductVendor
-                        $detail->shade_no = $shadeNo;
-                        $detail->color = $colors[$detailIndex];
-                        $detail->moq = $moqs[$detailIndex];
-                        $detail->status = $request->post('status');
-                        $detail->save();
+            if($request->post('yarn_vendor_id')){
+                foreach ($request->post('yarn_vendor_id') as $key => $yarnvendorId) {
+                    if(!empty($request->post('product_id')[$key])){
+                        $vendor = YarnProductVendor::find($request->post('product_id')[$key]);
+                        if ($vendor) {
+                            $vendor->vendor_yarn_name = $request->post('vendor_yarn_name')[$key];
+                            $vendor->denier = $request->post('denier')[$key];
+                            $vendor->status = $request->post('status');
+                            $vendor->save();
+                        }
+
+                        if($request->post('shade_no')[$key]){
+                            foreach($request->post('shade_no')[$key] as $key1 => $value1){
+                                if(!empty($request->post('product_item_id')[$key][$key1])){
+                                    $detail = YarnProductVendorDetail::find($request->post('product_item_id')[$key][$key1]);
+                                    if ($detail) {
+                                        $detail->shade_no = $value1;
+                                        $detail->color = $request->post('color')[$key][$key1];
+                                        $detail->moq = $request->post('moq')[$key][$key1];
+                                        $detail->status = $request->post('status');
+                                        $detail->save();
+                                    }
+                                } else {
+                                    $detail = new YarnProductVendorDetail();
+                                    $detail->yarn_product_id = $model->id;
+                                    $detail->yarn_product_vendor_id = $vendor->id;
+                                    $detail->shade_no = $value1;
+                                    $detail->color = $request->post('color')[$key][$key1];
+                                    $detail->moq = $request->post('moq')[$key][$key1];
+                                    $detail->status = $request->post('status');
+                                    $detail->save();
+                                }
+                            }
+                        }
+                    } else {
+                        $vendor = new YarnProductVendor();
+                        $vendor->yarn_product_id = $model->id;
+                        $vendor->vendor_yarn_name = $request->post('vendor_yarn_name')[$key];
+                        $vendor->denier = $request->post('denier')[$key];
+                        $vendor->status = $request->post('status');
+                        $vendor->save();
+
+                        if($request->post('shade_no')[$key]){
+                            foreach($request->post('shade_no')[$key] as $key1 => $value1){
+                                $detail = new YarnProductVendorDetail();
+                                $detail->yarn_product_id = $model->id;
+                                $detail->yarn_product_vendor_id = $vendor->id;
+                                $detail->shade_no = $value1;
+                                $detail->color = $request->post('color')[$key][$key1];
+                                $detail->moq = $request->post('moq')[$key][$key1];
+                                $detail->status = $request->post('status');
+                                $detail->save();
+                            }
+                        }
                     }
                 }
             }
 
-            echo json_encode(array('status'=>1,'message'=>$msg));
+            echo json_encode(['status' => 1, 'message' => $msg]);
 
         } catch (\Exception $e) {
             return response()->json(['status' => 0, 'message' => 'Some Error Occurred...']);
         }
-
     }
+
 
 
     public function delete(Request $request){
