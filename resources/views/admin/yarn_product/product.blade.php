@@ -37,7 +37,7 @@
                         <?php $i=1;?>
                         @foreach($products as $list)
                         @php
-                           $countVendors = \App\Models\YarnProductVendor::where('yarn_product_id',$list->id)->count();
+                           $countVendors = \App\Models\YarnProductVendor::where('yarn_product_id',$list->id)->where('is_deleted',0)->count();
                             $status = $list->status == "1" ? "Active" : "Inactive";
                             $statuscss = $list->status == "1" ? "active" : "inactive";
                         @endphp
