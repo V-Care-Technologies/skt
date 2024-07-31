@@ -104,6 +104,7 @@ class YarnProductController extends Controller
                                         $detail->shade_no = $value1;
                                         $detail->color = $request->post('color')[$key][$key1];
                                         $detail->moq = $request->post('moq')[$key][$key1];
+                                        $detail->display_order = $request->post('display_item')[$key][$key1];
                                         $detail->status = $request->post('status');
                                         $detail->save();
                                     }
@@ -114,6 +115,7 @@ class YarnProductController extends Controller
                                     $detail->shade_no = $value1;
                                     $detail->color = $request->post('color')[$key][$key1];
                                     $detail->moq = $request->post('moq')[$key][$key1];
+                                    $detail->display_order = $request->post('display_item')[$key][$key1];
                                     $detail->status = $request->post('status');
                                     $detail->save();
                                 }
@@ -122,6 +124,7 @@ class YarnProductController extends Controller
                     } else {
                         $vendor = new YarnProductVendor();
                         $vendor->yarn_product_id = $model->id;
+                        $vendor->yarn_vendor_id = $yarnvendorId;
                         $vendor->vendor_yarn_name = $request->post('vendor_yarn_name')[$key];
                         $vendor->denier = $request->post('denier')[$key];
                         $vendor->status = $request->post('status');
@@ -135,6 +138,7 @@ class YarnProductController extends Controller
                                 $detail->shade_no = $value1;
                                 $detail->color = $request->post('color')[$key][$key1];
                                 $detail->moq = $request->post('moq')[$key][$key1];
+                                $detail->display_order = $request->post('display_item')[$key][$key1];
                                 $detail->status = $request->post('status');
                                 $detail->save();
                             }
@@ -153,6 +157,7 @@ class YarnProductController extends Controller
 
 
     public function delete(Request $request){
+
        $id = $request->post('id');
        $model=YarnProduct::find($id);
        $model->is_deleted='1';
@@ -162,27 +167,31 @@ class YarnProductController extends Controller
        $model1->is_deleted='1';
        $model1->save();
 
-       YarnProductVendorDetail::where('yarn_product_id',$id)->delete();
+       $model2 = YarnProductVendorDetail::where('yarn_product_id',$id)->first();
+       $model2->is_deleted='1';
+       $model2->save();
        
        echo json_encode(array('status'=>1,'message'=>'Data'));
     } 
 
     public function deletevendor(Request $request){
-        $id = $request->post('id');
-       
+        $id = $request->post('prodid');
         $model1 = YarnProductVendor::where('id',$id)->first();
         $model1->is_deleted='1';
         $model1->save();
-        
-        YarnProductVendorDetail::where('yarn_product_vendor_id',$id)->delete();
+ 
+        $model2 = YarnProductVendorDetail::where('yarn_product_vendor_id',$id)->first();
+        $model2->is_deleted='1';
+        $model2->save();
 
         echo json_encode(array('status'=>1,'message'=>'Data'));
-     }
-     
+     } 
+
      public function deletevendordetail(Request $request){
-        $id = $request->post('id');
-       
-        YarnProductVendorDetail::where('id',$id)->delete();
+        $id = $request->post('itemid');
+        $model2 = YarnProductVendorDetail::where('id',$id)->first();
+        $model2->is_deleted='1';
+        $model2->save();
 
         echo json_encode(array('status'=>1,'message'=>'Data'));
      }
