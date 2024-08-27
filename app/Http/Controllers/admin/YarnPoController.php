@@ -15,38 +15,132 @@ class YarnPoController extends Controller
 
     public function index()
     {
-        $result['po']=DB::table('yarn_po')->where('is_deleted','0')->orderBy('id', 'DESC')->get();
+        $result['po']=DB::table('yarn_po')
+        ->leftJoin('yarn_vendor', 'yarn_vendor.id', '=', 'yarn_po.yarn_vendor_id')
+        ->leftJoin('yarn_product', 'yarn_product.id', '=', 'yarn_po.yarn_product_id')
+        ->leftJoin('yarn_po_detail', 'yarn_po.id', '=', 'yarn_po_detail.yarn_po_id')
+        ->select(
+            'yarn_po.*',
+            'yarn_vendor.name',
+            'yarn_product.skt_yarn_name',
+            DB::raw('SUM(yarn_po_detail.qty) as totqty')
+        )
+        ->groupBy('yarn_po.id', 'yarn_vendor.name', 'yarn_product.skt_yarn_name')
+        ->get();
 
         return view('admin.yarn_po.po',$result);
     }
 
-    public function manage_product(Request $request,$id='')
+    public function manage_po(Request $request,$id='')
     {
         if($id>0){
             $arr=DB::table('yarn_po')->where(['id'=>$id])->first(); 
 
-            $result['skt_yarn_name']=$arr->skt_yarn_name;
-            $result['gst']=$arr->gst;
-            $result['hsn_code']=$arr->hsn_code;
-            $result['status']=$arr->status;
+            // $result['skt_yarn_name']=$arr->skt_yarn_name;
+            // $result['gst']=$arr->gst;
+            // $result['hsn_code']=$arr->hsn_code;
+            // $result['status']=$arr->status;
+
+            $result['po_number']='';
+            $result['po_date']='';
+            $result['vendor_id']='';
+            $result['del_date']="";
+            $result['yarn_id']='';
+            $result['denier']='';
+            $result['freight']='';
+            $result['gst']="";
+            $result['hsn']='';
+            $result['status']='';
+            $result['yarn_type']='';
+            $result['rola_qty']="";
+            $result['rate']='';
+            $result['tot_amt']='';
+            $result['del_address']='';
+            $result['remarks']="";
+            $result['po_det']="";
           
             $result['id']=$arr->id;
 
             $result['product_record'] = DB::table('yarn_po')->where('yarn_product_id', $id)->where('is_deleted',0)->get();
             
         }else{
-            $result['skt_yarn_name']='';
-            $result['gst']='';
-            $result['hsn_code']='';
-            $result['status']="";
+            $result['po_number']='';
+            $result['po_date']='';
+            $result['yarn_vendor_id']='';
+            $result['del_date']="";
+            $result['yarn_id']='';
+            $result['denier']='';
+            $result['freight']='';
+            $result['gst']="";
+            $result['hsn']='';
+            $result['status']='';
+            $result['yarn_type']='';
+            $result['rola_qty']="";
+            $result['rate']='';
+            $result['tot_amt']='';
+            $result['del_address']='';
+            $result['remarks']="";
+            $result['po_det']="";
             
             $result['id']=0;
 
             $result['product_record'] = [];
         }
-        $result['getVendors'] = DB::table('yarn_po')->where('is_deleted', 0)->where('status', 1)->get();
+        $result['getVendors'] = DB::table('yarn_vendor')->where('is_deleted', 0)->where('status', 1)->get();
 
         return view('admin.yarn_po.manage_po',$result);
+    }
+
+    public function getYarn(Request $request)
+    {
+        $id=$request->post('id');
+        $pid=$request->post('pid');
+
+        $yarns = DB::table('yarn_product_vendor')
+        ->leftJoin('yarn_product', 'yarn_product.id', '=', 'yarn_product_vendor.yarn_product_id')
+        ->select(
+            'yarn_product_vendor.*',
+            'yarn_product.skt_yarn_name',
+            'yarn_product.gst',
+            'yarn_product.hsn_code',
+        )
+        ->where('yarn_product_vendor.yarn_vendor_id', $id)->where('yarn_product_vendor.is_deleted', 0)->where('yarn_product_vendor.status', 1)->get();
+        
+        $html='<option value="" >--Select--</option>';
+        foreach($yarns as $y){
+            $select="";
+            if($pid==$y->yarn_product_id){
+                $select="selected";
+            }
+            $html.='<option value="'.$y->yarn_product_id.'" '.$select.' data-id="'.$y->denier.'" data-gst="'.$y->gst.'" data-hsn="'.$y->hsn_code.'">'.$y->skt_yarn_name.'</option>';
+        }
+        echo json_encode(array('status'=>1,'message'=>'Data','data'=>$html));
+
+    }
+
+    public function getYarnDetails(Request $request)
+    {
+        $id=$request->post('id');
+        $pid=$request->post('pid');
+
+        $yarns = DB::table('yarn_product_vendor')
+        ->leftJoin('yarn_product', 'yarn_product.id', '=', 'yarn_product_vendor.yarn_product_id')
+        ->select(
+            'yarn_product_vendor.*',
+            'yarn_product.skt_yarn_name',
+        )
+        ->where('yarn_product_vendor.yarn_vendor_id', $id)->where('yarn_product_vendor.is_deleted', 0)->where('yarn_product_vendor.status', 1)->get();
+        
+        $html='<option value="" >--Select--</option>';
+        foreach($yarns as $y){
+            $select="";
+            if($pid==$y->yarn_product_id){
+                $select="selected";
+            }
+            $html.='<option value="'.$y->yarn_product_id.'" '.$select.' data-id="'.$y->denier.'">'.$y->skt_yarn_name.'</option>';
+        }
+        echo json_encode(array('status'=>1,'message'=>'Data','data'=>$html));
+
     }
 
     public function manage_product_process(Request $request)

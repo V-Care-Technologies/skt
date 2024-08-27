@@ -17,7 +17,7 @@
             </div> 
         </div> 
         <div class="col-xl-9 col-md-9 col-12 right_box">
-            <a href="{{ route('admin.manage-po') }}" class="dark-btn">+ Add Yarn PO</a>
+            <a href="{{ url('admin/manage-po') }}" class="dark-btn">+ Add Yarn PO</a>
         </div>
     </div>
     <div class="main_table_card">
@@ -27,46 +27,44 @@
                     <thead>
                         <tr>
                             <th scope="col" class="first_radius small_name">#</th>
-                            <th scope="col">Code</th>
+                            <th scope="col">Yarn Name</th>
                             <th scope="col">Vendor</th>
-                            <th scope="col">Mobile No.</th>  
+                            <th scope="col">Qty</th> 
+                            <th scope="col">Rate</th>  
                             <th scope="col">Status</th>
                             <th scope="col" class="last_radius">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=1;?>
-                        @foreach($vendors as $list)
-                        @php
-                           $firms = \App\Models\YarnVendorFirm::where('yarn_vendor_id',$list->id)->get();
-                            $status = $list->status == "1" ? "Active" : "Inactive";
-                            $statuscss = $list->status == "1" ? "active" : "inactive";
-                        @endphp
+                        <?php $i=1;$status='';?>
+                        @foreach($po as $list)
+                        @if($list->status == "1")
+                            @php $status="Pending";@endphp 
+                        @elseif($list->status == "2")
+                            @php $status="Authorize";@endphp 
+                        @elseif($list->status == "3")
+                            @php $status="Reject";@endphp 
+                        @endif
                         <tr>
                             <td>
                                 <p class="normal_text">{{ $i }}</p>
                             </td>
                             <td class="name_box">
-                                <p class="name">{{ $list->code }}</p>
+                                <p class="name">{{ $list->skt_yarn_name }}</p>
                             </td>
                             <td class="name_box">
                                 <p class="name">{{ $list->name }}</p>
                             </td>
                             <td class="">
                                 <div class="tag_box">
-                                    @foreach($firms as $firm)
-                                        <span class="tag">{{ $firm->vendor_name }}</span>
-                                    @endforeach
-                                    @if($firms->count() > 4)
-                                        <span class="tag other">+{{ $firms->count() - 4 }}</span>
-                                    @endif
+                                {{ $list->totqty }}
                                 </div>
                             </td>
                             <td class="name_box">
-                                <p class="name">{{ $list->po_followup_mobile }}</p>
+                                <p class="name">{{ $list->rate }}</p>
                             </td>
                             <td>
-                                <span class="status_btn {{ $statuscss }}">{{ $status }}</span>
+                                <span class="status_btn">{{ $status }}</span>
                             </td>
                             <td class="action_td">
                                 <div class="d-flex align-items-center">

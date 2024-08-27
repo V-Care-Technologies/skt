@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\YarnVendorController;
 use App\Http\Controllers\admin\YarnProductController;
+use App\Http\Controllers\admin\YarnPoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,6 +58,13 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/product/delete',[YarnProductController::class,'delete']);
     Route::post('admin/product/deletevendor',[YarnProductController::class,'deletevendor']);
     Route::post('admin/product/deletevendordetail',[YarnProductController::class,'deletevendordetail']);
+
+
+    Route::get('admin/yarnpo',[YarnPoController::class,'index']);
+    Route::get('admin/manage-po',[YarnPoController::class,'manage_po']);
+    Route::get('admin/manage-po/{id}',[YarnPoController::class,'manage_po']);
+    Route::post('admin/yarnpo/getYarn',[YarnPoController::class,'getYarn']);
+    Route::post('admin/yarnpo/getYarnDetails',[YarnPoController::class,'getYarnDetails']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

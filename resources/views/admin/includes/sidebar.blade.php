@@ -46,10 +46,10 @@
                     <ul class="menu-level-2" aria-expanded="true">
                         <li class="item"><a href="{{ route('admin.vendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('yarn_vendor_select')">Vendor</a></li> 
                         <li class="item"><a href="{{ route('admin.product') }}" class="link @yield('yarn_product_select')">Yarn Product</a></li>  
-                        <li class="item"><a href="po_form.html" class="link ">PO Form</a></li>  
-                        <li class="item"><a href="inward.html" class="link ">Inward</a></li>  
-                        <li class="item"><a href="sales_return.html" class="link ">Sales Return</a></li>  
-                        <li class="item"><a href="purchase_return.html" class="link ">Purchase Return</a></li>  
+                        <li class="item"><a href="{{ url('admin/yarnpo') }}" class="link ">PO Form</a></li>  
+                        <li class="item"><a href="#" class="link ">Inward</a></li>  
+                        <li class="item"><a href="#" class="link ">Sales Return</a></li>  
+                        <li class="item"><a href="#" class="link ">Purchase Return</a></li>  
                         <li class="item"><a href="" class="link ">Report</a></li>  
                     </ul>
                 </li> 
