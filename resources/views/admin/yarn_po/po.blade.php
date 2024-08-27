@@ -17,7 +17,7 @@
             </div> 
         </div> 
         <div class="col-xl-9 col-md-9 col-12 right_box">
-            <a href="{{ url('admin/manage-po') }}" class="dark-btn">+ Add Yarn PO</a>
+            <a href="{{ url('admin/yarnpo/manage-po') }}" class="dark-btn">+ Add Yarn PO</a>
         </div>
     </div>
     <div class="main_table_card">
@@ -57,7 +57,7 @@
                             </td>
                             <td class="">
                                 <div class="tag_box">
-                                {{ $list->totqty }}
+                                {{ $list->tot_qty }}
                                 </div>
                             </td>
                             <td class="name_box">
@@ -81,7 +81,7 @@
                                             </defs>
                                         </svg>
                                     </a>
-                                    <a href="{{url('admin/vendor/manage-vendor/')}}/{{$list->id}}">
+                                    <a href="{{url('admin/yarnpo/manage-po/')}}/{{$list->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                                             <path d="M14.1665 2.73039C14.3854 2.51153 14.6452 2.33791 14.9312 2.21946C15.2171 2.10101 15.5236 2.04004 15.8332 2.04004C16.1427 2.04004 16.4492 2.10101 16.7352 2.21946C17.0211 2.33791 17.281 2.51153 17.4998 2.73039C17.7187 2.94926 17.8923 3.2091 18.0108 3.49507C18.1292 3.78104 18.1902 4.08753 18.1902 4.39706C18.1902 4.70659 18.1292 5.01309 18.0108 5.29905C17.8923 5.58502 17.7187 5.84486 17.4998 6.06373L6.24984 17.3137L1.6665 18.5637L2.9165 13.9804L14.1665 2.73039Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>

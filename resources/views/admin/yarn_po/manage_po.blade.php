@@ -20,7 +20,7 @@
 <div class="inner-main-content">   
     <div class="main_page_heading">
         <h2><a href="{{ url('admin/yarnpo') }}" class="back_btn"><i class="fa-solid fa-arrow-left"></i></a>
-            @if($id != '0'){{"Update"}}@else{{"Add New"}}@endif PO</h2>
+            @if($id != '0'){{"Update"}}@else{{"Add New"}}@endif Yarn PO</h2>
     </div>
     <div class="main_contact_form">
         <form action="" id="save-form" class="validate" method="post" enctype="multipart/form-data" accept-charset="utf-8">
@@ -128,10 +128,8 @@
 
             </div>
             <div class="row">
-            @php
-                $product_items = \App\Models\YarnProductVendorDetail::where('is_deleted',0)->get();
-            @endphp
-                @if(isset($product_items))
+            
+                @if(count($po_det)>0)
                 <div class="renewal_table add_yarn_table">
                     <div class="table-responsive" style="min-height:auto">
                         <table class="table">
@@ -145,15 +143,12 @@
                                 </tr>
                             </thead>
                             <tbody id="attributes" class="attributes">
-                                
-                                
-                                <input type="hidden" class="counts" value="{{ isset($product_items) ? count($product_items) : 1 }}" />
-                                @if(isset($product_items))
-                                @foreach($product_items as $key1 => $item)
+                                @if(count($po_det)>0)
+                                @foreach($po_det as $key1 => $item)
                                 <tr class="vendor-detail-row attri new">
                                     <td>
                                         <div class="input_box normal_text counter2">
-                                            <input type="text" name="display_item[{{ $key1+1 }}]" id="display_item{{ $key1+1 }}" value="{{ $item->display_order }}" class="display_items">
+                                            <input type="text" name="display_item[{{ $key1+1 }}]" id="display_item{{ $key1+1 }}" value="{{ $key1+1 }}" class="display_items">
                                         </div>
                                     </td>
                                                 
@@ -161,8 +156,8 @@
                                         <div class="input_box">
                                             <select name="shade_no[{{ $key1+1 }}]" id="shade_no{{ $key1+1 }}" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
                                                 <option value="">--Select--</option> 
-                                                <?php foreach($getVendors as $getVendor){?>
-                                                    <option value="{{ $getVendor->id }}" {{ $yarn_vendor_id == $getVendor->id ? 'selected' : '' }} data-fr="{{$getVendor->freight}}">{{ $getVendor->name }}</option>
+                                                <?php foreach($products as $product){?>
+                                                    <option value="{{ $product->id }}" data-color="{{$product->color}}" {{ $item->yarn_product_vendor_detail_id == $product->id ? 'selected' : '' }} >{{ $product->shade_no }}</option>
                                                 <?php }?>
                                                         
                                             </select> 
@@ -176,7 +171,7 @@
                                     </td>
                                     <td>
                                         <div class="input_box">
-                                            <input type="number" name="moq[{{ $key1+1 }}]" id="moq{{ $key1+1 }}" value="{{ $item->moq }}" class="moqs" placeholder="Enter minimum quantity">
+                                            <input type="number" name="qty[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $item->qty }}" class="qty" placeholder="Enter quantity">
                                         </div>
                                     </td> 
                                     
@@ -190,9 +185,9 @@
                                                 </svg>Add
                                             </a>
 
-                                            <input type="hidden" name="product_item_id[{{ $key1+1 }}]" id="product_item_id{{ $key1+1 }}" value="{{ $item->id }}" class="form-control product_itemid">
+                                            <input type="hidden" name="po_detail_id[{{ $key1+1 }}]" id="po_detail_id{{ $key1+1 }}" value="{{ $item->id }}" class="form-control po_detail_id">
 
-                                            <a href="javascript:void(0)" class="remove_vendor_detail remove2 @if(count($product_items)<2) d-none @endif" onclick="remove2(this);">
+                                            <a href="javascript:void(0)" class="remove_vendor_detail remove2 @if(count($po_det)<2) d-none @endif" onclick="remove2(this);">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                                                     <path d="M2.5 5.23055H4.16667M4.16667 5.23055H17.5M4.16667 5.23055V16.8972C4.16667 17.3392 4.34226 17.7632 4.65482 18.0757C4.96738 18.3883 5.39131 18.5639 5.83333 18.5639H14.1667C14.6087 18.5639 15.0326 18.3883 15.3452 18.0757C15.6577 17.7632 15.8333 17.3392 15.8333 16.8972V5.23055H4.16667ZM6.66667 5.23055V3.56388C6.66667 3.12186 6.84226 2.69793 7.15482 2.38537C7.46738 2.07281 7.89131 1.89722 8.33333 1.89722H11.6667C12.1087 1.89722 12.5326 2.07281 12.8452 2.38537C13.1577 2.69793 13.3333 3.12186 13.3333 3.56388V5.23055M8.33333 9.39722V14.3972M11.6667 9.39722V14.3972" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -215,46 +210,41 @@
                                     <th scope="col" class="first_radius small_name">#</th>
                                     <th scope="col">Shade No.</th>
                                     <th scope="col">Color</th>
-                                    <th scope="col">MOQ</th>  
+                                    <th scope="col">Qty</th>  
                                     <th scope="col" class="last_radius"></th>
                                 </tr>
                             </thead>
                             <tbody id="attributes" class="attributes">
-                                <input type="hidden" class="counts" value='1' />
                                     
                                 <tr class="vendor-detail-row attri new">
                                     <td>
                                         <div class="input_box normal_text counter2">
-                                            <input type="text" name="display_item[1]" id="display_item11" value="1" class="display_items">
+                                            <input type="text" name="display_item[0]" id="display_item11" value="1" class="display_items">
                                         </div>
                                     </td>
                                                 
                                     <td> 
                                         <div class="input_box">
-                                            <select name="shade_no[1]" id="shade_no1" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
-                                                <option value="">--Select--</option> 
-                                                <?php foreach($getVendors as $getVendor){?>
-                                                    <option value="{{ $getVendor->id }}" {{ $yarn_vendor_id == $getVendor->id ? 'selected' : '' }} data-fr="{{$getVendor->freight}}">{{ $getVendor->name }}</option>
-                                                <?php }?>
-                                                        
+                                            <select name="shade_no[0]" id="shade_no1" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
+                                                
                                             </select> 
                                         </div>
                                     </td>
                                     
                                     <td>
                                         <div class="input_box">
-                                            <input type="text" name="color[1]" readonly id="color11" value="" class="colors" placeholder="Red">
+                                            <input type="text" name="color[0]" readonly id="color11" value="" class="colors" placeholder="Red">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input_box">
-                                            <input type="number" name="moq[1]" id="moq11" value="" class="moqs" placeholder="Enter minimum quantity">
+                                            <input type="number" name="qty[0]" id="qty1" value="" class="qty" placeholder="Enter quantity">
                                         </div>
                                     </td> 
                                     
                                     <td class="action_td">
                                         
-                                            <input type="hidden" name="product_item_id[1]" id="product_item_id11" value="" class="form-control product_itemid">
+                                        <input type="hidden" name="po_detail_id[0]" id="po_detail_id1" value="" class="form-control po_detail_id">
                                                     
                                         <div class="d-flex align-items-center"> 
                                             <a href="javascript:void(0)" class="add2" onclick="add2(this);" id="add-row" title="add">
@@ -281,6 +271,12 @@
                     
             </div>
             <div class="row">
+            <div class="col-lg-3">
+                    <div class="input_box">
+                        <p>Total Qty<span class="text-danger small">*</span></p>
+                        <input type="text" name="tot_qty" id="tot_qty" value="{{ $tot_qty }}" readonly placeholder="Enter Qty">
+                    </div>
+                </div>
                 <div class="col-lg-3">
                     <div class="input_box">
                         <p>Rate<span class="text-danger small">*</span></p>
@@ -290,7 +286,7 @@
                 <div class="col-lg-3">
                     <div class="input_box">
                         <p>Total Amount<span class="text-danger small">*</span></p>
-                        <input type="text" name="tot_amt" id="tot_amt" value="{{ $tot_amt }}" placeholder="Enter Amount">
+                        <input type="text" name="tot_amt" id="tot_amt" value="{{ $tot_amt }}" readonly placeholder="Enter Amount">
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -306,7 +302,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="id" value="{{$id}}"/> 
+            <input type="hidden" name="id" id="id" value="{{$id}}"/> 
             <div class="d-flex align-items-center justify-content-center mt-5 submit_row mb-5">
                 <a href="{{ url('admin/manage-po') }}" class="cancel-btn">Cancel</a>
                 <button type="submit" class="dark-btn">Save</button>
@@ -322,13 +318,13 @@
 @section('delscript')
 <script>
 $(document).ready(function() {
-
+    
     //Form Submit 
     $(document).on("submit","#save-form",function(e){
         e.preventDefault();		
         
         $.ajax({
-            url:"{{ url('admin/manage-po-process') }}",
+            url:"{{ url('admin/yarnpo/manage-po-process') }}",
             method:"POST",
             data:new FormData(this),
             contentType: false,
@@ -343,7 +339,7 @@ $(document).ready(function() {
                 if(obj.status=="1"){
                         $('.overlay-wrapper').hide(); 
                         Command: toastr["success"](obj.message, "Message")
-                        window.location.href = "{{ route('admin.vendor') }}";
+                        window.location.href = "{{ url('admin/yarnpo') }}";
                 }
                 else {
                     Command: toastr["error"](obj.message, "Message")	
@@ -388,8 +384,48 @@ $(document).ready(function() {
         $("#denier").val($(this).find(':selected').data('id'));
         $("#gst").val($(this).find(':selected').data('gst'));
         $("#hsn").val($(this).find(':selected').data('hsn'));
+        var id=$(this).val();
+        var vid=$("#yarn_vendor_id").val();
+        var poid=$("#id").val();
+        $.ajax({
+            url:"{{ url('admin/yarnpo/getYarnDetails') }}",
+            method:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{id:id,vid:vid,poid:poid},
+            // beforeSend: function(){
+            //     $('.overlay-wrapper').show();  
+            // },
+            success(response){
+              
+            var obj =  JSON.parse(response);
+            console.log(obj.data);
+            if(obj.status=="1"){
+                
+                // Set the selected options
+                //$('.shade_no').html(obj.data);
+                $('#attributes').html(obj.data);
+            
+            }
+            
+            }
+        })
     });
 
+
+    $(document).on("change", ".shade_no", function() {
+        var adds=$(this).parent().parent().parent();
+        adds.find('.colors').val($(this).find(':selected').data('color'));
+    });
+
+    $(document).on('keyup', '.qty', function(e) {
+        update_amounts();
+    });
+
+    $(document).on('keyup', '#rate', function(e) {
+        update_amounts();
+    });
 
     // Prevent form submission on Enter key press for all elements except the save button
     $('#save-form').on('keypress', function(e) {
@@ -407,11 +443,11 @@ $(document).ready(function() {
     });
 
 
-
+    $('#yarn_vendor_id').trigger('change');
 
 });
 
-function add2(element){
+    function add2(element){
         //var counts=$("#counters").val();
        
         var adds=$(element);
@@ -421,8 +457,7 @@ function add2(element){
             
         reset_child(adds.parent().parent().parent().parent().parent().parent().parent().parent());
     }
-    
-    
+        
     function remove2(element) {
         var mains=$(element).parent().parent().parent().parent().parent().parent().parent().parent();
         
@@ -447,7 +482,7 @@ function add2(element){
                     reset_child(mains);
                 } else {
                     $.ajax({
-                        url:"{{ url('admin/product/deletevendordetail') }}",
+                        url:"{{ url('admin/yarnpo/deletepodetail') }}",
                         method:"POST",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -482,25 +517,52 @@ function add2(element){
 
     function reset_child(element){
         var datas=element.find('.table tr.attri');
-            var j=0;
-            var count=datas.length;            
-            datas.each(function() {
-                if(count<2){
-                    $(this).find("a.remove2").addClass('d-none');
-                }else{
-                    $(this).find("a.remove2").removeClass('d-none');
-                }
-                $(this).find("td:eq(0) input").prop('name', 'display_item['+j+']');
-               
-                $(this).find("td:eq(1) input").prop('name', 'shade_no['+j+']');
-                $(this).find("td:eq(2) input").prop('name', 'color['+j+']');
-                $(this).find("td:eq(3) input").prop('name', 'qty['+j+']');
-                $(this).find("td:eq(4) input").prop('name', 'product_item_id['+j+']');
-                j=j+1;
-                $(this).find("td:eq(0) input").val(j);
-            });
+        var j=0;
+        var count=datas.length;            
+        datas.each(function() {
+            if(count<2){
+                $(this).find("a.remove2").addClass('d-none');
+            }else{
+                $(this).find("a.remove2").removeClass('d-none');
+            }
+            $(this).find("td:eq(0) input").prop('name', 'display_item['+j+']');
+            
+            $(this).find("td:eq(1) select").prop('name', 'shade_no['+j+']');
+            $(this).find("td:eq(2) input").prop('name', 'color['+j+']');
+            $(this).find("td:eq(3) input").prop('name', 'qty['+j+']');
+            $(this).find("td:eq(4) input").prop('name', 'po_detail_id['+j+']');
+            j=j+1;
+            $(this).find("td:eq(0) input").val(j);
+        });
+        update_amounts();
     }
     
+
+    
+
+function update_amounts()
+{
+  
+    var sum = 0;
+    $('#attributes .attri').each(function() {
+        var qty = $(this).find('.qty').val();
+        
+       if(qty!=''){
+        sum = parseFloat(qty.replace(/,/g, ''))+parseFloat(sum);
+       }
+
+        
+    });
+    var rate=$("#rate").val();
+    
+    var totsamt = parseFloat(sum) * parseFloat(rate);
+    $("#tot_qty").val(sum.toFixed(2));
+     
+    $("#tot_amt").val(totsamt.toFixed(2));
+       
+    
+}
+
 
 
 </script>

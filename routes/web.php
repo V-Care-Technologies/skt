@@ -61,10 +61,14 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
 
     Route::get('admin/yarnpo',[YarnPoController::class,'index']);
-    Route::get('admin/manage-po',[YarnPoController::class,'manage_po']);
-    Route::get('admin/manage-po/{id}',[YarnPoController::class,'manage_po']);
+    Route::get('admin/yarnpo/manage-po',[YarnPoController::class,'manage_po']);
+    Route::get('admin/yarnpo/manage-po/{id}',[YarnPoController::class,'manage_po']);
     Route::post('admin/yarnpo/getYarn',[YarnPoController::class,'getYarn']);
     Route::post('admin/yarnpo/getYarnDetails',[YarnPoController::class,'getYarnDetails']);
+    Route::post('admin/yarnpo/manage-po-process',[YarnPoController::class,'manage_po_process']);
+    Route::post('admin/yarnpo/delete',[YarnPoController::class,'delete']);
+    Route::post('admin/yarnpo/deletepodetail',[YarnPoController::class,'deletepodetail']);
+    
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');
