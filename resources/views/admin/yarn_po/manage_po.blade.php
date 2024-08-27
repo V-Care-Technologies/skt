@@ -3,8 +3,6 @@
 @section('yarn_purchase_system_select', 'active')
 @section('yarn_po_select', 'inner_active')
 
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script> 
 <style>
       body { margin: 0; padding: 0; }
       #maps { position: absolute; top: 0; bottom: 0; width: 100%; }
