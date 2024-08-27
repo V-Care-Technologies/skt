@@ -7,7 +7,7 @@
 
 <div class="inner-main-content">   
     <div class="main_page_heading">
-        <h2>@yield('page_title')hello</h2>
+        <h2>@yield('page_title')</h2>
     </div>
     <div class="row align-items-center search_main_row mb-3">
         <div class="col-xl-3 col-md-3 col-12 left_box">
