@@ -124,7 +124,7 @@ input:focus {
   font-size: 12px;
   font-weight: 500;
   position: absolute;
-  bottom: 7px;
+  bottom: 3px;
   left: 0;
   color: #7e0606;
 }
@@ -150,8 +150,7 @@ input:focus {
 .modal-header .btn-close{
   background-color: #fff;
   border-radius: 50%;
-}
-
+} 
 .sidebar_collapsed .sidebar-menu {
     left: -290px;
   }
@@ -177,7 +176,7 @@ input:focus {
   
   .nav-btn {
     margin-right: 20px;
-    margin-top: 3px;
+    margin-top: 0;
     cursor: pointer;
   }
   
@@ -239,9 +238,9 @@ input:focus {
   }
   
   .header-area .heading_header {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 28px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
     font-family: "Work Sans", sans-serif;
     margin-bottom: 0;
     color: #fff;
@@ -320,8 +319,9 @@ input:focus {
   }
   
   .header-area .dropdown-menu li {
-    border: 1px solid #B23632;
-    padding: 5px 0;
+    border-radius:7px 12px;
+    box-shadow:0px 0px 6.8px 0px #00000026;
+    padding: 5px 10px;
   }
   
   .dropdown_profile {
@@ -333,10 +333,19 @@ input:focus {
     background-color: transparent !important;
     border: 0 !important;
     right: 0 !important;
+    box-shadow: 1px 1px 1px 1px #00000026;
+    padding: 0;
+    margin-top: 20px !important;
   }
   
   .header-area .dropdown-menu li {
     background-color: #fff !important; 
+    border:1px solid #efefef!important
+  }
+  .header-area .dropdown-menu li a span{
+    display: inline-block;
+    margin-left: 5px;
+    color:#000;
   }
   
   .header-area .profile_icon .name_role {
@@ -345,9 +354,9 @@ input:focus {
     text-align: right;
   }
   .header-area .profile_icon  .backup_btn{
-    padding:10px 20px;
+    padding:8px 12px;
     border-radius:8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     margin-right:20px;;
     color:#030F1A;
@@ -522,9 +531,9 @@ input:focus {
     padding-bottom: 20px;;
   }
   .main_page_heading h2{
-    font-size: 24px;
+    font-size: 20px;
     color: #52575C;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0;
   }
 .main_page_heading h2 .back_btn{
@@ -539,25 +548,25 @@ input:focus {
   width: 100%; 
 }
 .searchBar .search_input {
-  padding: 7px 20px 7px 50px;
+  padding: 5px 20px 5px 40px;
   color:#101828;
   border: 0;
   background-color: transparent;
   width: 100%;
 }
 .dark-btn{
-  padding:10px 20px;
-  font-weight: 600;
-  font-size: 16px;
+  padding:7px 15px;
+  font-weight: 500;
+  font-size: 14px;
   border-radius: 6px;;
   background:#030F1A;
   border:1px solid #030F1A;
   color: #f9d27e !important;
 }
 .cancel-btn{
-  padding:10px 20px;
-  font-weight: 600;
-  font-size: 16px;
+  padding:7px 40px;
+  font-weight: 500;
+  font-size: 14px;
   border-radius: 6px;;
   background:transparent;
   border:1px solid #CFCFCF;
@@ -565,7 +574,7 @@ input:focus {
 }
 .submit_row button{
   margin:0 15px;
-  padding:10px 50px;
+  padding: 7px 40px;
 }
 .searchBar img {
   position: absolute;
@@ -646,8 +655,8 @@ input:focus {
 
 .renewal_table table .name_box .name{
   color:#030F1A;
-  font-size:18px;
-  font-weight: 600;
+  font-size:14px;
+  font-weight: 500;
   margin-bottom:0px;
 }
 
@@ -754,7 +763,7 @@ input:focus {
   padding:15px;
 }
 .renewal_table table thead th{
-  font-size:16px;
+  font-size:14px;
   font-weight: 500;
   color:#F9D27E;
   background-color: #030F1A;
@@ -824,26 +833,28 @@ input:focus {
   justify-content: end;
 }
 
-
+.login_section .input_box input , .login_section .input_box p{
+  color:#fff
+}
 .main_contact_form{
   padding-top: 30px;;
 }
 .input_box{
-  padding-bottom: 25px;;
+  padding-bottom: 20px;;
   position: relative;
 }
 .input_box p{
-  font-size:16px;
-  font-weight: 600;
-  color:#fff;
+  font-size:14px;
+  font-weight: 400;
+  color:#222222;
   margin-bottom:2px;
 }
 .input_box input:focus , .input_box textarea:focus{
   outline: none;
 }
-.input_box input , .input_box textarea{
-  padding:8px 16px;
-  font-size: 16px;
+.input_box input , .input_box textarea , .input_box select{
+  padding:5px 15px;
+  font-size: 14px;
   color:#222222;
   border:1px solid #CBD5E1;
   border-radius: 8px;;
@@ -856,8 +867,8 @@ input:focus {
 
 .input_box .location_icon{
   position: absolute;
-  bottom: 32px;
-  left: 20px;
+  bottom: 28px;
+  left: 12px;
 }
 input:disabled{
   background-color: #E1E1E1;
@@ -899,7 +910,7 @@ select{
 }
 .form_inner_heading h2{
   color:#030F1A;
-  font-size: 24px;;
+  font-size: 20px;;
   font-weight: 600;
   margin:0;
   display: flex;
@@ -916,7 +927,7 @@ select{
 .firm_section .firm_body .firm_row{
   box-shadow: 0px 0px 6.8px 0px #00000026;
   background-color: #fff;
-  padding:20px;
+  padding:10px;
   margin-bottom:20px;
   border-radius: 8px;
 }
