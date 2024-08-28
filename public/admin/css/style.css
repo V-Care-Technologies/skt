@@ -835,7 +835,7 @@ input:focus {
 .input_box p{
   font-size:16px;
   font-weight: 600;
-  color:#222222;
+  color:#fff;
   margin-bottom:2px;
 }
 .input_box input:focus , .input_box textarea:focus{
