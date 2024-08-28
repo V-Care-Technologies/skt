@@ -156,7 +156,7 @@ class YarnInwardController extends Controller
             $result['denier_issue']=$arr->denier_issue; 
             $result['packaging_issue']=$arr->packaging_issue; 
             $result['coning_issue']=$arr->coning_issue; 
-            $result['inward_det']=DB::table('yarn_inward_detail')->where('yarn_inward_id', $id)->get();
+            $result['inward_det']=DB::table('yarn_inward_detail')->where('yarn_inward_id', $id)->where('is_deleted',0)->get();
             $result['firms']=DB::table('yarn_vendor_firms')->where('yarn_vendor_id', $arr->yarn_vendor_id)->get();
             //$result['products']=DB::table('yarn_product_vendor_detail')->where('yarn_product_id', $arr->yarn_product_id)->where('yarn_product_vendor_id', $arr->yarn_vendor_id)->where('is_deleted',0)->get();
           
@@ -297,7 +297,7 @@ class YarnInwardController extends Controller
        echo json_encode(array('status'=>1,'message'=>'Data'));
     } 
 
-    public function deletepodetail(Request $request){
+    public function deleteinwarddetail(Request $request){
 
         $id = $request->post('id');
         $model=YarnInwardDetail::find($id);
