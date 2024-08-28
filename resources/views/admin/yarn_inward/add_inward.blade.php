@@ -102,9 +102,9 @@
                     <div class="input_box">
                         <p>Yarn Inward Format</p>
                         <select name="yarn_inward"  class="mySelect2 col model_select">
-                            <option value="1" @if($status == "1"){{"selected"}}@endif>Rola</option> 
-                            <option value="2" @if($status == "2"){{"selected"}}@endif>Spools</option> 
-                            <option value="3" @if($status == "3"){{"selected"}}@endif>Cops</option>   
+                            <option value="1" @if($yarn_type == "1"){{"selected"}}@endif>Rola</option> 
+                            <option value="2" @if($yarn_type == "2"){{"selected"}}@endif>Spools</option> 
+                            <option value="3" @if($yarn_type == "3"){{"selected"}}@endif>Cops</option>   
                         </select>
                     </div>
                 </div>
