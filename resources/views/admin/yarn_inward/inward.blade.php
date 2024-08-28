@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
-@section('page_title', 'Yarn PO')
+@section('page_title', 'Yarn Inward')
 @section('yarn_purchase_system_select', 'active')
-@section('yarn_po_select', 'inner_active')
+@section('yarn_inward_select', 'inner_active')
 
 @section('content')
 
@@ -16,9 +16,9 @@
                     <input type="text" class="search_input" placeholder="Search" id="customSearch">   
             </div> 
         </div> 
-        <div class="col-xl-9 col-md-9 col-12 right_box">
-            <a href="{{ url('admin/yarnpo/manage-po') }}" class="dark-btn">+ Add Yarn PO</a>
-        </div>
+        <!-- <div class="col-xl-9 col-md-9 col-12 right_box">
+            <a href="{{ url('admin/yarninward/manage-inward') }}" class="dark-btn">+ Add Yarn Inward</a>
+        </div> -->
     </div>
     <div class="main_table_card">
         <div class="renewal_table">
@@ -27,49 +27,46 @@
                     <thead>
                         <tr>
                             <th scope="col" class="first_radius small_name">#</th>
-                            <th scope="col">Yarn Name</th>
+                            <th scope="col">PO No</th>
+                            <th scope="col">Challan No</th>
                             <th scope="col">Vendor</th>
                             <th scope="col">Qty</th> 
-                            <th scope="col">Rate</th>  
                             <th scope="col">Status</th>
                             <th scope="col" class="last_radius">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i=1;$status='';?>
-                        @foreach($po as $list)
+                        @foreach($inward as $list)
                         @if($list->status == "1")
-                            @php $status="Pending";@endphp 
+                            @php $status="Done";@endphp 
                         @elseif($list->status == "2")
-                            @php $status="Authorize";@endphp 
-                        @elseif($list->status == "3")
-                            @php $status="Reject";@endphp 
+                            @php $status="Issue";@endphp 
                         @endif
                         <tr>
                             <td>
                                 <p class="normal_text">{{ $i }}</p>
                             </td>
                             <td class="name_box">
-                                <p class="name">{{ $list->skt_yarn_name }}</p>
+                                <p class="name">{{ $list->po_number }}</p>
                             </td>
                             <td class="name_box">
-                                <p class="name">{{ $list->name }}</p>
+                                <p class="name">{{ $list->challan_no }}</p>
+                            </td>
+                            <td class="name_box">
+                                <p class="name">{{ $list->vendor_name }}</p>
                             </td>
                             <td class="">
                                 <div class="tag_box">
-                                {{ $list->tot_qty }}
+                                {{ $list->totqty }}
                                 </div>
                             </td>
-                            <td class="name_box">
-                                <p class="name">{{ $list->rate }}</p>
-                            </td>
+                            
                             <td>
                                 <span class="status_btn">{{ $status }}</span>
                             </td>
                             <td class="action_td">
                                 <div class="d-flex align-items-center">
-                                <a href="{{url('admin/yarninward/add-inward/')}}/{{$list->id}}">Inward</a>
-
                                     <a href="javascript:void(0)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                                             <g clip-path="url(#clip0_721_2925)">
@@ -83,7 +80,7 @@
                                             </defs>
                                         </svg>
                                     </a>
-                                    <a href="{{url('admin/yarnpo/manage-po/')}}/{{$list->id}}">
+                                    <a href="{{url('admin/yarninward/manage-inward/')}}/{{$list->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                                             <path d="M14.1665 2.73039C14.3854 2.51153 14.6452 2.33791 14.9312 2.21946C15.2171 2.10101 15.5236 2.04004 15.8332 2.04004C16.1427 2.04004 16.4492 2.10101 16.7352 2.21946C17.0211 2.33791 17.281 2.51153 17.4998 2.73039C17.7187 2.94926 17.8923 3.2091 18.0108 3.49507C18.1292 3.78104 18.1902 4.08753 18.1902 4.39706C18.1902 4.70659 18.1292 5.01309 18.0108 5.29905C17.8923 5.58502 17.7187 5.84486 17.4998 6.06373L6.24984 17.3137L1.6665 18.5637L2.9165 13.9804L14.1665 2.73039Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
@@ -133,7 +130,7 @@ $(document).ready( function() {
         }).then((willDelete) => {
             if (willDelete) {
                 $.ajax({
-                    url:"{{ url('admin/yarnpo/delete') }}",
+                    url:"{{ url('admin/yarninward/delete') }}",
                     method:"POST",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

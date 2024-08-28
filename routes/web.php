@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\YarnVendorController;
 use App\Http\Controllers\admin\YarnProductController;
 use App\Http\Controllers\admin\YarnPoController;
+use App\Http\Controllers\admin\YarnInwardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,6 +69,16 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/yarnpo/manage-po-process',[YarnPoController::class,'manage_po_process']);
     Route::post('admin/yarnpo/delete',[YarnPoController::class,'delete']);
     Route::post('admin/yarnpo/deletepodetail',[YarnPoController::class,'deletepodetail']);
+
+    Route::get('admin/yarninward',[YarnInwardController::class,'index']);
+    Route::get('admin/yarninward/add-inward/{id}',[YarnInwardController::class,'add_inward']);
+    Route::get('admin/yarninward/manage-inward',[YarnInwardController::class,'manage_inward']);
+    Route::get('admin/yarninward/manage-inward/{id}',[YarnInwardController::class,'manage_inward']);
+    Route::post('admin/yarninward/getYarn',[YarnInwardController::class,'getYarn']);
+    Route::post('admin/yarninward/getYarnDetails',[YarnInwardController::class,'getYarnDetails']);
+    Route::post('admin/yarninward/manage-inward-process',[YarnInwardController::class,'manage_inward_process']);
+    Route::post('admin/yarninward/delete',[YarnInwardController::class,'delete']);
+    Route::post('admin/yarninward/deleteinwarddetail',[YarnInwardController::class,'deleteinwarddetail']);
     
     
     Route::get('admin/logout', function () {
