@@ -759,9 +759,9 @@ input:focus {
 .renewal_table table td{
   vertical-align: middle;
 }
-/* .renewal_table table .action_td a {
-  padding:15px;
-} */
+.renewal_table table .action_td a {
+  margin:0 15px;
+}
 .renewal_table table thead th{
   font-size:14px;
   font-weight: 500;
