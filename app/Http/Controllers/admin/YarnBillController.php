@@ -50,44 +50,25 @@ class YarnBillController extends Controller
             ->select(
                 'yarn_bill.*',
                 'yarn_po.po_number',
+                'yarn_po.yarn_vendor_id',
                 'yarn_vendor_firms.vendor_name',
                 'yarn_product.skt_yarn_name',
                 'yarn_vendor.name',
             )
             ->where(['yarn_bill.id'=>$id])->first(); 
             
-            // $result['skt_yarn_name']=$arr->skt_yarn_name;
-            // $result['gst']=$arr->gst;
-            // $result['hsn_code']=$arr->hsn_code;
-            // $result['status']=$arr->status;
-            $result['challan_id']=$arr->challan_id;
-            $result['yarn_po_id']=$arr->yarn_po_id;
-            $result['po_number']=$arr->po_inward_no;
-            $result['challan_no']=$arr->challan_no;
-            $result['challan_date']=$arr->challan_date;
             $result['yarn_vendor_id']=$arr->yarn_vendor_id;
-            $result['yarn_vendor_name']=$arr->name;
-            $result['received_date']=$arr->received_date;
-            $result['yarn_id']=$arr->yarn_product_id;
-            $result['yarn_name']=$arr->skt_yarn_name;
-            $result['denier']=$arr->denier;            
+            $result['bill_firm_id']=$arr->bill_firm_id;
+            $result['yarn_po_id']=$arr->yarn_po_id;
+            $result['bill_no']=$arr->bill_no;
+            $result['bill_date']=$arr->bill_date;
+            $result['bill_rate']=$arr->bill_rate;            
+            $result['tot_amt']=$arr->tot_amt;                  
             $result['status']=$arr->status;
-            $result['yarn_type']=$arr->yarn_inward_format;
-            $result['rola_qty']=$arr->rola_qty;
-            $result['rate']=$arr->rate;
-            $result['tot_amt']=$arr->total_amt;
             $result['remarks']=$arr->remarks;
-            $result['tot_qty']=$arr->tot_qty;
-            $result['denier_issue']=$arr->denier_issue; 
-            $result['packaging_issue']=$arr->packaging_issue; 
-            $result['coning_issue']=$arr->coning_issue; 
-            $result['inward_det']=DB::table('yarn_inward_detail')->where('yarn_inward_id', $id)->where('is_deleted',0)->get();
-            $result['firms']=DB::table('yarn_vendor_firms')->where('yarn_vendor_id', $arr->yarn_vendor_id)->get();
-            //$result['products']=DB::table('yarn_product_vendor_detail')->where('yarn_product_id', $arr->yarn_product_id)->where('yarn_product_vendor_id', $arr->yarn_vendor_id)->where('is_deleted',0)->get();
-          
+            $result['bill_rate_issue']=$arr->bill_rate_issue; 
             $result['id']=$arr->id;
 
-            //$result['product_record'] = DB::table('yarn_po_detail')->where('yarn_po_id', $id)->where('is_deleted',0)->get();
             
         }else{
             $result['yarn_vendor_id']="";
@@ -126,7 +107,7 @@ class YarnBillController extends Controller
             if($pid==$y->id){
                 $select="selected";
             }
-            $html.='<option value="'.$y->id.'" '.$select.' >'.$y->po_number.'</option>';
+            $html.='<option value="'.$y->id.'" '.$select.' data-id="'.$y->po_number.'">'.$y->po_number.'</option>';
         }
 
         $firms = DB::table('yarn_vendor')
@@ -155,6 +136,8 @@ class YarnBillController extends Controller
         $id=$request->post('id');
         if($id){
         $result['bill_id']=$request->post('bill_id');
+        $result['challan_ids']=DB::table('yarn_bill')->where('id', $request->post('bill_id'))->first();
+        
         $result['challan']=DB::table('yarn_inward')
         ->leftJoin('yarn_vendor_firms', 'yarn_vendor_firms.id', '=', 'yarn_inward.challan_id')
         ->leftJoin('yarn_inward_detail', 'yarn_inward_detail.yarn_inward_id', '=', 'yarn_inward.id')
@@ -174,11 +157,16 @@ class YarnBillController extends Controller
             'yarn_product.skt_yarn_name'
         )
         ->where('yarn_po.id', $id)->where('yarn_po.is_deleted',0)->first();
+        
+        $totqty=0;
+        foreach($result['challan'] as $item){
+            $totqty=$totqty+$item->totqty;
+        }
 
         
         $html = view('admin.yarn_bill.ajax')->with($result)->render();
 
-        echo json_encode(array('status'=>1,'message'=>'Data','data'=>$html));
+        echo json_encode(array('status'=>1,'message'=>'Data','data'=>$html,'totqty'=>$totqty));
         }else{
             echo json_encode(array('status'=>1,'message'=>'Data','data'=>'No Challan Found'));
         }
@@ -200,7 +188,8 @@ class YarnBillController extends Controller
             return;
         }
 
-        try {
+        //try {
+        
             if ($request->post('id') > 0) {
                 $model = YarnBill::find($request->post('id'));
                 $model->updated_by = session('ADMIN_ID');
@@ -212,9 +201,9 @@ class YarnBillController extends Controller
                 $model->created_at = date('Y-m-d H:i:s');
                 $msg = "Yarn Bill inserted";
             }
-            $model->yarn_po_id = $request->post('yarn_po_id');
-            $model->po_inward_no = $request->post('po_inward_no');             
-            $model->challan_ids = implode(',',$request->post('challan_ids')); 
+            $model->yarn_po_id = $request->post('po_no');
+            $model->po_inward_no = $request->post('yarn_po_no');             
+            $model->challan_ids = (string) implode(',',$request->post('inward_id')); 
             $model->bill_firm_id = $request->post('bill_firm_id');
             $model->bill_no = $request->post('bill_no'); 
             $model->bill_date = $request->post('bill_date'); 
@@ -227,9 +216,9 @@ class YarnBillController extends Controller
             
             echo json_encode(['status' => 1, 'message' => $msg]);
 
-        } catch (\Exception $e) {
-            return response()->json(['status' => 0, 'message' => 'Some Error Occurred...']);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['status' => 0, 'message' => 'Some Error Occurred...']);
+        // }
     }
 
 

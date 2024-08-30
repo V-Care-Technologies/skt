@@ -49,10 +49,11 @@
                 @elseif($item->status == "2")
                     @php $status="Issue";@endphp 
                 @endif
+
                 <tr class="vendor-detail-row attri new">
                     <td>
                         <div class="input_box normal_text counter2">
-                            <input type="checkbox" name="inward_id[{{ $key1+1 }}]" value="{{ $item->id }}"/>
+                            <input type="checkbox"  <?php if($challan_ids){ $idsArray = explode(',', $challan_ids->challan_ids); if(in_array($item->id, $idsArray)) {echo "checked";}else{ echo "";} }?> class="inward_id" name="inward_id[{{ $key1+1 }}]" value="{{ $item->id }}"/>
                         </div>
                     </td>
                     
@@ -80,7 +81,7 @@
                     
                     </td> 
                     <td>
-                    <input type="text" readonly name="status[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $status }}" class="qty" placeholder="Enter quantity">
+                    <input type="text" readonly name="status_c[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $status }}" class="qtys" placeholder="Enter quantity">
                     </td>
                     
                     

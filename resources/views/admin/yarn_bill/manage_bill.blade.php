@@ -44,6 +44,7 @@
                             <option value="">--Select--</option> 
                         </select> 
                         <input type="hidden" name="yarn_po_id" id="yarn_po_id" value="{{ $yarn_po_id }}" />
+                        <input type="hidden" name="yarn_po_no" id="yarn_po_no" />
                     </div>
                 </div> 
 
@@ -70,17 +71,31 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3">
+                
+
+                
+            </div>
+            <hr/>
+            <div class="row add_yarn_table">
+            
+                               
+                               
+                    
+            </div>
+            <hr/>
+            <div class="row">
+            <div class="col-lg-3">
                     <div class="input_box">
                         <p>Bill Rate<span class="text-danger small">*</span></p>
                         <input type="text" name="bill_rate" id="bill_rate" value="{{ $bill_rate }}" placeholder="Enter bill Rate" >
+                    
                     </div>
                 </div>
 
                 <div class="col-lg-3">
                     <div class="input_box">
                         <p>Total<span class="text-danger small">*</span></p>
-                        <input type="text" readonly name="tot_amt" value="{{ $tot_amt }}" placeholder="Enter Total" >
+                        <input type="text" readonly id="tot_amt" name="tot_amt" value="{{ $tot_amt }}" placeholder="Enter Total" >
                     </div>
                 </div>
                
@@ -94,19 +109,6 @@
                         </select>
                     </div>
                 </div>
-
-                
-            </div>
-            <hr/>
-            <div class="row add_yarn_table">
-            
-                               
-                               
-                    
-            </div>
-            <hr/>
-            <div class="row">
-            
                 
                 <div class="col-lg-12">
                     <div class="input_box">
@@ -142,7 +144,7 @@
 @section('delscript')
 <script>
 $(document).ready(function() {
-
+    
     $(document).on("change", "#yarn_vendor_id", function() {
         var id = $(this).val();  // Correctly get the `data-id` attribute
         var pid='{{$yarn_po_id}}';
@@ -160,7 +162,6 @@ $(document).ready(function() {
             success(response){
               
             var obj =  JSON.parse(response);
-            console.log(obj.data);
             if(obj.status=="1"){
                 
                 // Set the selected options
@@ -178,6 +179,7 @@ $(document).ready(function() {
         $('.add_yarn_table').html('');
         var id=$(this).val();
         var bill_id=$("#id").val();
+        $("#yarn_po_no").val($(this).find(':selected').data('id'));
         $.ajax({
             url:"{{ url('admin/yarnbill/getChallanDetails') }}",
             method:"POST",
@@ -192,10 +194,10 @@ $(document).ready(function() {
               
             var obj =  JSON.parse(response);
             if(obj.status=="1"){
-                
                 // Set the selected options
                 //$('.shade_no').html(obj.data);
                 $('.add_yarn_table').html(obj.data);
+                calc();
             
             }
             
@@ -203,7 +205,10 @@ $(document).ready(function() {
         })
     });
 
-    
+    $(document).on("change",".inward_id", function(){
+        calc()
+    })
+    $('#yarn_vendor_id').trigger('change');
     //Form Submit 
     $(document).on("submit","#save-form",function(e){
         e.preventDefault();		
@@ -237,7 +242,7 @@ $(document).ready(function() {
     
 
     $(document).on('keyup', '#bill_rate', function(e) {
-        calc($(this));
+        calc();
     });
 
    
@@ -262,15 +267,23 @@ $(document).ready(function() {
 
 });
 
-function calc(thiss)
+function calc()
 {
-    var mains=thiss.parent().parent().parent();
-    var c_qty=mains.find("input.challan_qty").val();
-    var i_qty=mains.find("input.inward_qty").val();
-    var wt=parseFloat(c_qty)-parseFloat(i_qty);
-    mains.find("input.wt_diff").val(wt);
-    var wt_per=(parseFloat(wt)/parseFloat(c_qty))*100;
-    mains.find("input.wt_diff_per").val(wt_per);
+    var checkboxes = $('.inward_id:checked'); // Select checked checkboxes
+     var qty=0;   
+     checkboxes.each(function() {
+        qt=$(this).parent().parent().parent().find('.qty').val();
+        qty += parseFloat(qt);
+        //checkedValues.push(checkbox.value); // Push the value of each checked checkbox into the array
+    });
+    $('#tot_amt').val(parseFloat($('#bill_rate').val())*parseFloat(qty));
+    // var mains=thiss.parent().parent().parent();
+    // var c_qty=mains.find("input.challan_qty").val();
+    // var i_qty=mains.find("input.inward_qty").val();
+    // var wt=parseFloat(c_qty)-parseFloat(i_qty);
+    // mains.find("input.wt_diff").val(wt);
+    // var wt_per=(parseFloat(wt)/parseFloat(c_qty))*100;
+    // mains.find("input.wt_diff_per").val(wt_per);
     
 }
 
