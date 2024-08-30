@@ -25,7 +25,7 @@
     </div>
         @yield('modals')
     
-        <!-- @include('admin.includes.footer') -->
+         @include('admin.includes.footer') 
 
         @include('admin.includes.bottom-links')
 
