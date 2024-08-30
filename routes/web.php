@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\YarnVendorController;
 use App\Http\Controllers\admin\YarnProductController;
 use App\Http\Controllers\admin\YarnPoController;
 use App\Http\Controllers\admin\YarnInwardController;
+use App\Http\Controllers\admin\YarnBillController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -74,12 +75,17 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::get('admin/yarninward/add-inward/{id}',[YarnInwardController::class,'add_inward']);
     Route::get('admin/yarninward/manage-inward',[YarnInwardController::class,'manage_inward']);
     Route::get('admin/yarninward/manage-inward/{id}',[YarnInwardController::class,'manage_inward']);
-    Route::post('admin/yarninward/getYarn',[YarnInwardController::class,'getYarn']);
-    Route::post('admin/yarninward/getYarnDetails',[YarnInwardController::class,'getYarnDetails']);
     Route::post('admin/yarninward/manage-inward-process',[YarnInwardController::class,'manage_inward_process']);
     Route::post('admin/yarninward/delete',[YarnInwardController::class,'delete']);
     Route::post('admin/yarninward/deleteinwarddetail',[YarnInwardController::class,'deleteinwarddetail']);
     
+    Route::get('admin/yarnbill',[YarnBillController::class,'index']);
+    Route::get('admin/yarnbill/manage-bill',[YarnBillController::class,'manage_bill']);
+    Route::get('admin/yarnbill/manage-bill/{id}',[YarnBillController::class,'manage_bill']);
+    Route::post('admin/yarnbill/getChallanDetails',[YarnBillController::class,'getChallanDetails']);
+    Route::post('admin/yarnbill/getYarnPO',[YarnBillController::class,'getYarnPO']);
+    Route::post('admin/yarnbill/manage-bill-process',[YarnBillController::class,'manage_bill_process']);
+    Route::post('admin/yarnbill/delete',[YarnBillController::class,'delete']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

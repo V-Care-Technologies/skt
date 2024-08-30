@@ -48,7 +48,9 @@
                         <li class="item"><a href="{{ route('admin.product') }}" class="link @yield('yarn_product_select')">Yarn Product</a></li>  
                         <li class="item"><a href="{{ url('admin/yarnpo') }}" class="link @yield('yarn_po_select')">PO Form</a></li>  
                         <li class="item"><a href="{{ url('admin/yarninward') }}" class="link @yield('yarn_inward_select')">Inward</a></li>  
-                        <li class="item"><a href="#" class="link ">Sales Return</a></li>  
+                        <li class="item"><a href="{{ url('admin/yarnbill') }}" class="link @yield('yarn_bill_select')">Bill</a></li>  
+                        
+                        <!-- <li class="item"><a href="#" class="link ">Sales Return</a></li>   -->
                         <li class="item"><a href="#" class="link ">Purchase Return</a></li>  
                         <li class="item"><a href="" class="link ">Report</a></li>  
                     </ul>

@@ -235,7 +235,7 @@
                     
             </div>
             <div class="row">
-            <div class="col-lg-3">
+                <div class="col-lg-3">
                     <div class="input_box">
                         <p>Total Qty<span class="text-danger small">*</span></p>
                         <input type="text" name="tot_qty" id="tot_qty" value="{{ $tot_qty }}" readonly placeholder="Enter Qty">
@@ -292,7 +292,7 @@
             <input type="hidden" name="yarn_po_id" id="yarn_po_id" value="{{$yarn_po_id}}"/> 
             <input type="hidden" name="id" id="id" value="{{$id}}"/> 
             <div class="d-flex align-items-center justify-content-center mt-5 submit_row mb-5">
-                <a href="{{ url('admin/yarninward/manage-inward') }}" class="cancel-btn">Cancel</a>
+                <a href="{{ url('admin/yarninward') }}" class="cancel-btn">Cancel</a>
                 <button type="submit" class="dark-btn">Save</button>
             </div>
         </form>
