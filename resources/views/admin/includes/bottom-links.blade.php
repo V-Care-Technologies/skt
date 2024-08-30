@@ -1,5 +1,5 @@
-<script src="{{ url('public/admin/js/jquery.min.js') }}"></script>
-<script src="https://tarwalas.in/myts/public/admin/js/metisMenu.min.js"></script>
+<script src="{{ url('public/admin/js/jquery.min.js') }}"></script> 
+<script src="{{ url('public/admin/js/metisMenu.min.js') }}" type="text/javascript"></script>
 <script src="{{ url('public/admin/js/sweetalert2.min.js') }}" type="text/javascript"></script>
 <script src="{{ url('public/admin/js/moment.js') }}"></script>  
 <script src="{{ url('public/admin/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>

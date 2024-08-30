@@ -26,7 +26,7 @@
                     </a>
                 </li> 
                 <li class="item @yield('yarn_purchase_system_select')">
-                    <a href="#" class="link" aria-expanded="true"> 
+                    <a href="#" class="link" aria-expanded="false"> 
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <g clip-path="url(#clip0_1100_5971)">
                             <path d="M20.1413 18.1778C19.6679 19.7636 20.7094 20.6156 21.6088 21.6334C22.0821 22.1541 22.1058 23.0772 22.3898 24.0002C15.4076 24.0002 8.73303 24.0002 2.05848 24.0002C1.65611 22.0357 2.91055 20.2369 4.87504 19.9766C9.60877 19.3612 14.3188 18.7695 19.0526 18.1778C19.3602 18.1541 19.6679 18.1778 20.1413 18.1778Z" fill="#3C4C5B"></path>
@@ -43,7 +43,7 @@
                         </svg>
                         <span>Yarn Purchase System</span>
                     </a>
-                    <ul class="menu-level-2" aria-expanded="true">
+                    <ul class="menu-level-2 " aria-expanded="false">
                         <li class="item"><a href="{{ route('admin.vendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('yarn_vendor_select')">Vendor</a></li> 
                         <li class="item"><a href="{{ route('admin.product') }}" class="link @yield('yarn_product_select')">Yarn Product</a></li>  
                         <li class="item"><a href="{{ url('admin/yarnpo') }}" class="link @yield('yarn_po_select')">PO Form</a></li>  
