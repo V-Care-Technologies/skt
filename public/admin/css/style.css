@@ -156,9 +156,7 @@ input:focus {
   }
   
   .sidebar-menu {
-    position: fixed;
-    
-    overflow: auto;
+    position: absolute;
     left: 0;
     top: 0;
     z-index: 99;
@@ -507,8 +505,7 @@ input:focus {
   }
   
   .metismenu {
-    padding: 0 15px 0 15px;
-    overflow: auto;
+    padding: 0 15px 0 15px; 
     background-color: #030F1A;
   }
   
@@ -1040,11 +1037,29 @@ footer span{
       border: 0.5px solid #CCCCCC;
       box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
       border-radius: 6px;
-      background-color: #B23632;
+      background-color: #030f1a;
       overflow: hidden;
     }
     .sidebar_collapsed #menu .metismenu li .menu-level-2 {
-      padding-left: 10px !important;
+      padding-left: 10px !important; 
+      display: block;
+      height: auto !important;
+      padding: 0;
+      width: 170px;
+      text-align: left;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      transition: all 0.5s ease;
+      border: 0.5px solid #CCCCCC;
+      box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+      background-color: #B23632;
+      overflow: hidden;
+      display:none;
+    }
+    .sidebar_collapsed #menu .metismenu li:hover .menu-level-2{
+      display: block;
     }
     .sidebar_collapsed #menu .metismenu li .menu-level-2 li:last-child a:after {
       left: 0;

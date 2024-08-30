@@ -20,12 +20,12 @@
         <div class="main-content" style="min-height:225px;">  
             @include('admin.includes.header')
             @yield('content')
+            @include('admin.includes.footer') 
             
         </div> 
     </div>
         @yield('modals')
     
-         @include('admin.includes.footer') 
 
         @include('admin.includes.bottom-links')
 
