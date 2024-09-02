@@ -81,7 +81,7 @@ class YarnBillController extends Controller
             $result['status']="";
             $result['remarks']="";
             $result['bill_rate_issue']=""; 
-            $result['id']="";
+            $result['id']="0";
         }
         $result['getVendors'] = DB::table('yarn_vendor')->leftJoin('yarn_po', 'yarn_vendor.id', '=', 'yarn_po.yarn_vendor_id')->select('yarn_vendor.*')->where('yarn_vendor.is_deleted', 0)->where('yarn_vendor.status', 1)->get();
 
@@ -188,7 +188,7 @@ class YarnBillController extends Controller
             return;
         }
 
-        //try {
+        try {
         
             if ($request->post('id') > 0) {
                 $model = YarnBill::find($request->post('id'));
@@ -216,9 +216,9 @@ class YarnBillController extends Controller
             
             echo json_encode(['status' => 1, 'message' => $msg]);
 
-        // } catch (\Exception $e) {
-        //     return response()->json(['status' => 0, 'message' => 'Some Error Occurred...']);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 0, 'message' => 'Some Error Occurred...']);
+        }
     }
 
 

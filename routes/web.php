@@ -8,6 +8,8 @@ use App\Http\Controllers\admin\YarnProductController;
 use App\Http\Controllers\admin\YarnPoController;
 use App\Http\Controllers\admin\YarnInwardController;
 use App\Http\Controllers\admin\YarnBillController;
+use App\Http\Controllers\admin\RolaInwardController;
+use App\Http\Controllers\admin\RolaOutwardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -86,6 +88,20 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/yarnbill/getYarnPO',[YarnBillController::class,'getYarnPO']);
     Route::post('admin/yarnbill/manage-bill-process',[YarnBillController::class,'manage_bill_process']);
     Route::post('admin/yarnbill/delete',[YarnBillController::class,'delete']);
+
+    Route::get('admin/rolainward',[RolaInwardController::class,'index']);
+    Route::get('admin/rolainward/manage-rolainward',[RolaInwardController::class,'manage_rolainward']);
+    Route::get('admin/rolainward/manage-rolainward/{id}',[RolaInwardController::class,'manage_rolainward']);
+    Route::post('admin/rolainward/getChallanDetails',[RolaInwardController::class,'getChallanDetails']);
+    Route::post('admin/rolainward/manage-rolainward-process',[RolaInwardController::class,'manage_rolainward_process']);
+    Route::post('admin/rolainward/delete',[RolaInwardController::class,'delete']);
+
+    Route::get('admin/rolaoutward',[RolaOutwardController::class,'index']);
+    Route::get('admin/rolaoutward/manage-rolaoutward',[RolaOutwardController::class,'manage_rolaoutward']);
+    Route::get('admin/rolaoutward/manage-rolaoutward/{id}',[RolaOutwardController::class,'manage_rolaoutward']);
+    Route::post('admin/rolaoutward/getChallanDetails',[RolaOutwardController::class,'getChallanDetails']);
+    Route::post('admin/rolaoutward/manage-rolaoutward-process',[RolaOutwardController::class,'manage_rolaoutward_process']);
+    Route::post('admin/rolaoutward/delete',[RolaOutwardController::class,'delete']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

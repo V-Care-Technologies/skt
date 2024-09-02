@@ -18,7 +18,7 @@
 <div class="inner-main-content">   
     <div class="main_page_heading">
         <h2><a href="{{ url('admin/yarnbill') }}" class="back_btn"><i class="fa-solid fa-arrow-left"></i></a>
-            Update Yarn Bill</h2>
+        @if($id != '0'){{"Update"}}@else{{"Add New"}}@endif Yarn Bill</h2>
     </div>
     <div class="main_contact_form">
         <form action="" id="save-form" class="validate" method="post" enctype="multipart/form-data" accept-charset="utf-8">

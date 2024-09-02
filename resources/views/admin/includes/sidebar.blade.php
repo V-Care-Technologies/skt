@@ -151,7 +151,7 @@
                         <li class="item"><a href="sales_order.html" class="link ">Sales Order</a></li>   
                     </ul>
                 </li>    
-                <li class="item ">
+                <li class="item @yield('rola_system_select') ">
                     <a href="#" class="link" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <g clip-path="url(#clip0_1105_6109)">
@@ -167,9 +167,9 @@
                         <span>Rola</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="false"> 
-                        <li class="item"><a href="job_card.html" class="link ">Inward</a></li>  
-                        <li class="item"><a href="sales_order.html" class="link ">Outward</a></li>   
-                        <li class="item"><a href="sales_order.html" class="link ">Stock</a></li>   
+                        <li class="item"><a href="{{ url('admin/rolainward') }}" class="link @yield('rola_inward_select')">Inward</a></li>  
+                        <li class="item"><a href="{{ url('admin/rolaoutward') }}" class="link @yield('rola_outward_select')">Outward</a></li>   
+                        <li class="item"><a href="#" class="link ">Stock</a></li>   
                     </ul>
                 </li>     
                 <li class="item ">
