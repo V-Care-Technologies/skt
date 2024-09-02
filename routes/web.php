@@ -102,6 +102,9 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/rolaoutward/getChallanDetails',[RolaOutwardController::class,'getChallanDetails']);
     Route::post('admin/rolaoutward/manage-rolaoutward-process',[RolaOutwardController::class,'manage_rolaoutward_process']);
     Route::post('admin/rolaoutward/delete',[RolaOutwardController::class,'delete']);
+
+    Route::post('admin/rolaoutward/stock',[RolaOutwardController::class,'getStock']);
+    Route::post('admin/rolaoutward/stockdetail/{id}',[RolaOutwardController::class,'getStockDetail']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');
