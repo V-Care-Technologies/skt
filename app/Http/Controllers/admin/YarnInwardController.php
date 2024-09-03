@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\RolaInward;
 use Illuminate\Http\Request;
 use App\Models\YarnInward;
 use App\Models\YarnInwardDetail;
@@ -195,6 +196,11 @@ class YarnInwardController extends Controller
                 $model->created_by = session('ADMIN_ID');
                 $model->created_at = date('Y-m-d H:i:s');
                 $msg = "Yarn Inward inserted";
+
+                $rolamodel = new RolaInward();
+                $rolamodel->qty = $request->post('rola_qty');
+                $rolamodel->is_auto = '1';
+                $rolamodel->save();
             }
             $model->yarn_po_id = $request->post('yarn_po_id');
             $model->po_inward_no = $request->post('po_inward_no');             
