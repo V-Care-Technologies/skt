@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\YarnInwardController;
 use App\Http\Controllers\admin\YarnBillController;
 use App\Http\Controllers\admin\RolaInwardController;
 use App\Http\Controllers\admin\RolaOutwardController;
+use App\Http\Controllers\Admin\FabricProcessController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -105,6 +106,12 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::get('admin/rolaoutward/stock',[RolaOutwardController::class,'getStock']);
     Route::get('admin/rolaoutward/stockdetail/{id}',[RolaOutwardController::class,'getStockDetail']);
+
+    Route::get('admin/fabricprocess',[FabricProcessController::class,'index']);
+    Route::get('admin/fabricprocess/manage-fabricprocess',[FabricProcessController::class,'manage_fabricprocess']);
+    Route::get('admin/fabricprocess/manage-fabricprocess/{id}',[FabricProcessController::class,'manage_fabricprocess']);
+     Route::post('admin/fabricprocess/manage-fabricprocess-process',[FabricProcessController::class,'manage_fabricprocess_process']);
+    Route::post('admin/fabricprocess/delete',[FabricProcessController::class,'delete']);
     
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

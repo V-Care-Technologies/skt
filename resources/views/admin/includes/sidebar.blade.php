@@ -104,7 +104,7 @@
                         <li class="item"><a href="" class="link ">Report</a></li>    
                     </ul>
                 </li>  
-                <li class="item ">
+                <li class="item @yield('fabric_process_system_select')">
                     <a href="#" class="link" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M17.4829 8.25464C19.6283 9.11679 21.6935 9.93885 23.9391 10.8411C23.5581 11.0216 23.3777 11.1419 23.1772 11.2221C19.6885 12.6256 16.1797 14.0291 12.691 15.4125C12.3501 15.5529 11.889 15.613 11.5682 15.4927C7.83884 14.0291 4.12956 12.5454 0.420289 11.0416C0.360139 11.0216 0.340089 10.9614 0.179688 10.801C2.305 9.93885 4.37016 9.11679 6.49548 8.25464C7.47793 10.9013 9.26239 12.5053 12.1095 12.4451C14.8363 12.405 16.5406 10.8411 17.4829 8.25464Z" fill="#F9D27E"/>
@@ -117,8 +117,8 @@
                         <span>Fabric Process</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="false"> 
-                        <li class="item"><a href="vendor_master.html" class="link ">Vendor master</a></li>  
-                        <li class="item"><a href="process_master.html" class="link ">Process Master</a></li>   
+                        <li class="item"><a href="#" class="link ">Vendor master</a></li>  
+                        <li class="item"><a href="{{ url('admin/fabricprocess') }}" class="link @yield('fabric_process_select')">Process Master</a></li>   
                     </ul>
                 </li>   
                 <li class="item ">
