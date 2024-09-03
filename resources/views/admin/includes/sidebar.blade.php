@@ -169,7 +169,7 @@
                     <ul class="menu-level-2" aria-expanded="false"> 
                         <li class="item"><a href="{{ url('admin/rolainward') }}" class="link @yield('rola_inward_select')">Inward</a></li>  
                         <li class="item"><a href="{{ url('admin/rolaoutward') }}" class="link @yield('rola_outward_select')">Outward</a></li>   
-                        <li class="item"><a href="#" class="link ">Stock</a></li>   
+                        <li class="item"><a href="{{ url('admin/rolaoutward/stock') }}" class="link @yield('rola_stock_select')">Stock</a></li>   
                     </ul>
                 </li>     
                 <li class="item ">

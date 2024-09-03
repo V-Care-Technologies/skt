@@ -121,6 +121,50 @@ class RolaOutwardController extends Controller
        echo json_encode(array('status'=>1,'message'=>'Data'));
     } 
 
+    public function getStock()
+    {
+        $inwardQuery = DB::table('rola_inward')
+            ->select('yarn_vendor_id', DB::raw('SUM(qty) as inward_qty'))
+            ->groupBy('yarn_vendor_id');
+
+        $outwardQuery = DB::table('rola_outward')
+            ->select('yarn_vendor_id', DB::raw('SUM(qty) as outward_qty'))
+            ->groupBy('yarn_vendor_id');
+
+        $result['rola'] = DB::table(DB::raw("({$inwardQuery->toSql()}) as inward"))
+            ->mergeBindings($inwardQuery) // Merge bindings for the subquery
+            ->leftJoin(DB::raw("({$outwardQuery->toSql()}) as outward"), 'inward.yarn_vendor_id', '=', 'outward.yarn_vendor_id')
+            ->leftJoin('yarn_vendor', 'inward.yarn_vendor_id', '=', 'yarn_vendor.id')
+            ->select(
+                'inward.yarn_vendor_id',
+                'yarn_vendor.name',
+                DB::raw('COALESCE(inward.inward_qty, 0) - COALESCE(outward.outward_qty, 0) AS stock')
+            )
+            ->get();
+
+        return view('admin.rola_outward.stock',$result);
+    }
+    public function getStockDetail(Request $request,$id='')
+    {
+
+        $result['outward']=DB::table('rola_outward')
+            ->leftJoin('yarn_vendor', 'rola_outward.yarn_vendor_id', '=', 'yarn_vendor.id')
+            ->select(
+                'rola_outward.*',
+                'yarn_vendor.name',
+            )
+            ->where(['rola_outward.yarn_vendor_id'=>$id])->get(); 
+
+        $result['inward']=DB::table('rola_inward')
+            ->leftJoin('yarn_vendor', 'rola_inward.yarn_vendor_id', '=', 'yarn_vendor.id')
+            ->select(
+                'rola_inward.*',
+                'yarn_vendor.name',
+            )
+            ->where(['rola_inward.yarn_vendor_id'=>$id])->get();     
+        
+        return view('admin.rola_outward.stockdetails',$result);
+    }
     
 }
 
