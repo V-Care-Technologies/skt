@@ -10,8 +10,8 @@ use App\Http\Controllers\admin\YarnInwardController;
 use App\Http\Controllers\admin\YarnBillController;
 use App\Http\Controllers\admin\RolaInwardController;
 use App\Http\Controllers\admin\RolaOutwardController;
-use App\Http\Controllers\Admin\FabricProcessController;
-use App\Http\Controllers\Admin\FabricProductController;
+use App\Http\Controllers\admin\FabricProcessController;
+use App\Http\Controllers\admin\FabricProductController;
  
 Route::get('/', function () {
     return view('welcome');
