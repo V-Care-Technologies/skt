@@ -12,7 +12,7 @@ use App\Http\Controllers\admin\RolaInwardController;
 use App\Http\Controllers\admin\RolaOutwardController;
 use App\Http\Controllers\Admin\FabricProcessController;
 use App\Http\Controllers\Admin\FabricProductController;
-
+ 
 Route::get('/', function () {
     return view('welcome');
 });
