@@ -119,6 +119,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::get('admin/fabricproduct/manage-fabricproduct/{id}',[FabricProductController::class,'manage_fabricproduct']);
     Route::post('admin/fabricproduct/manage-fabricproduct-process',[FabricProductController::class,'manage_fabricproduct_process']);
     Route::post('admin/fabricproduct/delete',[FabricProductController::class,'delete']);
+    Route::post('admin/fabricproduct/deletepodetail',[FabricProductController::class,'deletepodetail']);
 
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

@@ -43,7 +43,7 @@
                                 <p class="normal_text">{{ $i }}</p>
                             </td>
                             <td class="name_box">
-                                <p class="name">{{ $list->images }}</p>
+                                <p class="name"><img src="{{asset('/public/fabric_product/').'/'.$list->images}}" id="img" style="height: 80px;"/></p>
                             </td>
                             <td class="name_box">
                                 <p class="name">{{ $list->skt_name }}</p>

@@ -99,7 +99,7 @@
                 <div class="col-lg-3">
                     <div class="input_box">
                         <p>GST (%)</p>
-                        <input type="text" name="gst" id="gst" value="{{ $gst }}" placeholder="Enter GST (%)" >
+                        <input type="text" name="gst_main" id="gst" value="{{ $gst }}" placeholder="Enter GST (%)" >
                     </div>
                 </div>  
                 <div class="col-lg-3">
@@ -118,7 +118,10 @@
                     <div class="input_box">
                         <p>Product Photo</p>
                         <input type="file" name="images" id="images" />
-                        <img src="{{$images}}" height="80px"/>
+                        @if($images)
+                        <img src="{{asset('/public/fabric_product/').'/'.$images}}" id="img" style="height: 80px;"/>
+                        @endif
+                        <input type="hidden" name="images_hidden" value="{{$images}}"/>
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -156,9 +159,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="first_radius small_name">#</th>
-                                        <th scope="col">Shade No.</th>
-                                        <th scope="col">Color</th>
-                                        <th scope="col">Qty</th>  
+                                        <th scope="col">Process</th>
+                                        <th scope="col">Vendor</th>
+                                        <th scope="col">Rate</th> 
+                                        <th scope="col">GST (%)</th> 
+                                        <th scope="col">Timeline</th>  
                                         <th scope="col" class="last_radius"></th>
                                     </tr>
                                 </thead>
@@ -166,6 +171,7 @@
                                     @if(count($po_det)>0)
                                     @foreach($po_det as $key1 => $item)
                                     <tr class="vendor-detail-row attri new">
+                                            
                                         <td>
                                             <div class="input_box normal_text counter2">
                                                 <input type="text" name="display_item[{{ $key1+1 }}]" id="display_item{{ $key1+1 }}" value="{{ $key1+1 }}" class="display_items">
@@ -174,24 +180,35 @@
                                                     
                                         <td> 
                                             <div class="input_box">
-                                                <select name="shade_no[{{ $key1+1 }}]" id="shade_no{{ $key1+1 }}" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
-                                                    <option value="">--Select--</option> 
-                                                    <?php foreach($products as $product){?>
-                                                        <option value="{{ $product->id }}" data-color="{{$product->color}}" {{ $item->yarn_product_vendor_detail_id == $product->id ? 'selected' : '' }} >{{ $product->shade_no }}</option>
-                                                    <?php }?>
-                                                            
+                                                <select name="process[{{ $key1+1 }}]"  id="shade_no{{ $key1+1 }}" class="form-control process xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
+                                                <option value="">--Select--</option> 
+                                                <?php foreach($fabric_process as $fabric_proc){?>
+                                                    <option value="{{ $fabric_proc->id }}" {{ $item->process_id == $fabric_proc->id ? 'selected' : '' }}>{{ $fabric_proc->title }}</option>
+                                                <?php }?>
                                                 </select> 
                                             </div>
                                         </td>
                                         
                                         <td>
                                             <div class="input_box">
-                                                <input type="text" readonly name="color[{{ $key1+1 }}]" id="color{{ $key1+1 }}" value="{{ $item->color }}" class="colors" placeholder="Red">
+                                                <select name="vendor[{{ $key1+1 }}]" id="shade_no{{ $key1+1 }}" class="form-control vendor xx mySelect2">
+                                                    
+                                                </select> 
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input_box">
-                                                <input type="number" name="qty[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $item->qty }}" class="qty" placeholder="Enter quantity">
+                                                <input type="number" name="rate[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $item->rate }}" class="rate" placeholder="Enter Rate">
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="input_box">
+                                                <input type="number" name="gst[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $item->gst }}" class="gst" placeholder="Enter GST">
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="input_box">
+                                                <input type="number" name="timeline[{{ $key1+1 }}]" id="qty{{ $key1+1 }}" value="{{ $item->timeline }}" class="timeline" placeholder="Enter Timeline">
                                             </div>
                                         </td> 
                                         
@@ -203,7 +220,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="me-2"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.333 3.333a1.333 1.333 0 0 1 1.333 -1.333h3.68a1.333 1.333 0 0 1 1.041 0.5l0.933 1.167H13.333a1.333 1.333 0 0 1 1.333 1.333V12.667a1.333 1.333 0 0 1 -1.333 1.333H2.667a1.333 1.333 0 0 1 -1.333 -1.333zm6.667 2.667a0.667 0.667 0 0 1 0.667 0.667v1.333h1.333a0.667 0.667 0 0 1 0 1.333h-1.333v1.333a0.667 0.667 0 0 1 -1.333 0v-1.333H6a0.667 0.667 0 0 1 0 -1.333h1.333v-1.333a0.667 0.667 0 0 1 0.667 -0.667" fill="#f9d27e"></path></svg>Add
                                                 </a>
 
-                                                <input type="hidden" name="po_detail_id[{{ $key1+1 }}]" id="po_detail_id{{ $key1+1 }}" value="{{ $item->id }}" class="form-control po_detail_id">
+                                                <input type="hidden" name="product_process_id[{{ $key1+1 }}]" id="product_process_id{{ $key1+1 }}" value="{{ $item->id }}" class="form-control product_process_id">
 
                                                 <a href="javascript:void(0)" class="remove_vendor_detail remove2 @if(count($po_det)<2) d-none @endif" onclick="remove2(this);">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
@@ -239,43 +256,46 @@
                                     <tr class="vendor-detail-row attri new">
                                         <td>
                                             <div class="input_box normal_text counter2">
-                                                <input type="text" name="display_item[0]" id="display_item11" value="1" class="display_items">
+                                                <input type="text" name="display_item[0]" id="display_item10" value="1" class="display_items">
                                             </div>
                                         </td>
                                                     
                                         <td> 
                                             <div class="input_box">
-                                                <select name="process[0]" id="shade_no1" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
-                                                    
+                                                <select name="process[0]" id="process0" class="form-control process xx mySelect" data-validate="required" data-message-required="Select process" required>
+                                                    <option value="">--Select--</option> 
+                                                    <?php foreach($fabric_process as $fabric_proc){?>
+                                                        <option value="{{ $fabric_proc->id }}" >{{ $fabric_proc->title }}</option>
+                                                    <?php }?>
                                                 </select> 
                                             </div>
                                         </td>
                                         
                                         <td>
                                             <div class="input_box">
-                                                <select name="vendor[0]" id="shade_no1" class="form-control shade_no xx mySelect2" data-validate="required" data-message-required="Select vendor" required>
+                                                <select name="vendor[0]" id="vendor0" class="form-control vendor xx mySelect2" >
                                                     
                                                 </select> 
                                             </div>
                                         </td>
                                         <td>
                                             <div class="input_box">
-                                                <input type="number" name="rate[0]" id="qty1" value="" class="qty" placeholder="Enter quantity">
+                                                <input type="number" name="rate[0]" id="rate0" value="" class="rate" placeholder="Enter Rate">
                                             </div>
                                         </td> 
                                         <td>
                                             <div class="input_box">
-                                                <input type="number" name="gst[0]" id="qty1" value="" class="qty" placeholder="Enter quantity">
+                                                <input type="number" name="gst[0]" id="gst0" value="" class="gst" placeholder="Enter GST">
                                             </div>
                                         </td> 
                                         <td>
                                             <div class="input_box">
-                                                <input type="number" name="timeline[0]" id="qty1" value="" class="qty" placeholder="Enter quantity">
+                                                <input type="number" name="timeline[0]" id="timeline0" value="" class="timeline" placeholder="Enter Timeline">
                                             </div>
                                         </td> 
                                         <td class="action_td">
                                             
-                                            <input type="hidden" name="po_detail_id[0]" id="po_detail_id1" value="" class="form-control po_detail_id">
+                                            <input type="hidden" name="product_process_id[0]" id="product_process_id0" value="" class="form-control product_process_id">
                                                         
                                             <div class="d-flex align-items-center"> 
                                                 <a href="javascript:void(0)" class="add2 add_form_btn dark-btn  me-2" onclick="add2(this);" id="add-row" title="add">
@@ -396,9 +416,101 @@ $(document).ready(function() {
         }
     });
 
-
-
 });
+    function add2(element){
+        //var counts=$("#counters").val();
+       
+        var adds=$(element);
+
+        var row1 = $(".new:last");
+        row1.clone(true,true).appendTo("#attributes").find("input,select,textarea").val("");        
+            
+        reset_child(adds.parent().parent().parent().parent().parent().parent().parent().parent());
+    }
+        
+    function remove2(element) {
+        var mains=$(element).parent().parent().parent().parent().parent().parent().parent().parent();
+        
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                var adds=$(element);
+                //alert(adds.prev('input').val());
+                var itemid = adds.prev('input').val();
+                alert(itemid);
+                if (!itemid) { // Check if itemid is undefined or empty
+                    Command: toastr["error"]("Deleted Successfully", "Message");
+                    
+                    element.closest(".attri").remove();
+                    reset_child(mains);
+                } else {
+                    $.ajax({
+                        url:"{{ url('admin/fabricproduct/deletepodetail') }}",
+                        method:"POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{id:itemid},
+                        beforeSend: function(){
+                            $('.overlay-wrapper').show();  
+                        },
+                        success(response){
+                        setTimeout(function(){    
+                        var obj =  JSON.parse(response);
+                        if(obj.status=="1"){
+                            $('.overlay-wrapper').hide(); 
+                            Command: toastr["error"]("Deleted Successfully", "Message")
+                            
+                            element.closest(".attri").remove();
+                            reset_child(mains);
+                        
+                        }else{
+                            $('.overlay-wrapper').hide(); 
+                            Command: toastr["error"]("Some Error Occurred", "Message")
+                        }
+                        },1000);
+                        }
+                    })
+                }
+            } else {
+                    swal("Your record is safe!");
+                }
+        });
+    }
+
+    function reset_child(element){
+        var datas=element.find('.table tr.attri');
+        var j=0;
+        var count=datas.length;            
+        datas.each(function() {
+            if(count<2){
+                $(this).find("a.remove2").addClass('d-none');
+            }else{
+                $(this).find("a.remove2").removeClass('d-none');
+            }
+            $(this).find("td:eq(0) input").prop('name', 'display_item['+j+']');
+            
+            $(this).find("td:eq(1) select").prop('name', 'process['+j+']');
+            $(this).find("td:eq(2) input").prop('name', 'vendor['+j+']');
+            $(this).find("td:eq(3) input").prop('name', 'rate['+j+']');
+            $(this).find("td:eq(5) input").prop('name', 'timeline['+j+']');
+            $(this).find("td:eq(4) input").prop('name', 'gst['+j+']');
+            $(this).find("td:eq(6) input").prop('name', 'product_process_id['+j+']');
+            j=j+1;
+            $(this).find("td:eq(0) input").val(j);
+        });
+        
+    }
+    
+
+
 
 
 
