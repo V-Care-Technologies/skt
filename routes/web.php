@@ -12,6 +12,8 @@ use App\Http\Controllers\admin\RolaInwardController;
 use App\Http\Controllers\admin\RolaOutwardController;
 use App\Http\Controllers\admin\FabricProcessController;
 use App\Http\Controllers\admin\FabricProductController;
+use App\Http\Controllers\admin\FabricWeaverVendorController;
+use App\Http\Controllers\admin\FabricProcessVendorController;
  
 Route::get('/', function () {
     return view('welcome');
@@ -120,6 +122,20 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/fabricproduct/manage-fabricproduct-process',[FabricProductController::class,'manage_fabricproduct_process']);
     Route::post('admin/fabricproduct/delete',[FabricProductController::class,'delete']);
     Route::post('admin/fabricproduct/deletepodetail',[FabricProductController::class,'deletepodetail']);
+
+    Route::get('admin/fabricweavervendor',[FabricWeaverVendorController::class,'index']);
+    Route::get('admin/fabricweavervendor/manage-vendor',[FabricWeaverVendorController::class,'manage_vendor']);
+    Route::get('admin/fabricweavervendor/manage-vendor/{id}',[FabricWeaverVendorController::class,'manage_vendor']);
+    Route::post('admin/fabricweavervendor/manage-vendor-process',[FabricWeaverVendorController::class,'manage_vendor_process']);
+    Route::post('admin/fabricweavervendor/delete',[FabricWeaverVendorController::class,'delete']);
+    Route::post('admin/fabricweavervendor/deletefirm',[FabricWeaverVendorController::class,'deletefirm']);
+
+    Route::get('admin/fabricprocessvendor',[FabricProcessVendorController::class,'index']);
+    Route::get('admin/fabricprocessvendor/manage-vendor',[FabricProcessVendorController::class,'manage_vendor']);
+    Route::get('admin/fabricprocessvendor/manage-vendor/{id}',[FabricProcessVendorController::class,'manage_vendor']);
+    Route::post('admin/fabricprocessvendor/manage-vendor-process',[FabricProcessVendorController::class,'manage_vendor_process']);
+    Route::post('admin/fabricprocessvendor/delete',[FabricProcessVendorController::class,'delete']);
+    Route::post('admin/fabricprocessvendor/deletefirm',[FabricProcessVendorController::class,'deletefirm']);
 
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');

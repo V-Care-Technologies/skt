@@ -95,7 +95,7 @@
                         <span>Fabric Weaver</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="false"> 
-                        <li class="item"><a href="weaver_master.html" class="link ">Weaver master</a></li>  
+                        <li class="item"><a href="{{ url('admin/fabricweavervendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('fabric_weaver_vendor_select')">Weaver master</a></li>  
                         <li class="item"><a href="{{ url('admin/fabricproduct') }}" class="link @yield('fabric_product_select')">Product Master</a></li>  
                         <li class="item"><a href="fabric_po_form.html" class="link ">PO Form</a></li>    
                         <li class="item"><a href="fabric_inward.html" class="link ">Inward</a></li>    
@@ -117,7 +117,7 @@
                         <span>Fabric Process</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="false"> 
-                        <li class="item"><a href="#" class="link ">Vendor master</a></li>  
+                        <li class="item"><a href="{{ url('admin/fabricprocessvendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('fabric_process_vendor_select')">Vendor master</a></li>  
                         <li class="item"><a href="{{ url('admin/fabricprocess') }}" class="link @yield('fabric_process_select')">Process Master</a></li>   
                     </ul>
                 </li>   
