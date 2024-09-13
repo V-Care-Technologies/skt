@@ -913,8 +913,8 @@ $(document).ready(function() {
 
 });
     update_yarn_costing();
-    update_warp_total();
-    update_weft_total();
+    // update_warp_total();
+    // update_weft_total();
     $(document).on('keyup', '.total_card', function(e) {
         update_yarn_costing();
     });
@@ -936,31 +936,38 @@ $(document).ready(function() {
     });
 
     $(document).on('keyup', '.taar_warp', function(e) {
-        update_warp_total();
+        //update_warp_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.denier_warp', function(e) {
-        update_warp_total();
+        //update_warp_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.rate_warp', function(e) {
-        update_warp_total();
+        //update_warp_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.peak_weft', function(e) {
-        update_weft_total();
+        //update_weft_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.denier_weft', function(e) {
-        update_weft_total();
+        //update_weft_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.rate_weft', function(e) {
-        update_weft_total();
+        //update_weft_total();
+        update_yarn_costing();
     });
 
     $(document).on('keyup', '.panna', function(e) {
-        update_weft_total();
+        //update_weft_total();
+        update_yarn_costing();
     });
 
     function add2(element){
@@ -1246,7 +1253,8 @@ $(document).ready(function() {
             j=j+1;
             $(this).find("td:eq(0) input").val(j);
         });
-        update_warp_total();
+        //update_warp_total();
+        update_yarn_costing();
     }
     
     function add5(element){
@@ -1339,13 +1347,17 @@ $(document).ready(function() {
             j=j+1;
             $(this).find("td:eq(0) input").val(j);
         });
-        update_weft_total();
+        //update_weft_total();
+        update_yarn_costing();
     }
     
 
     function update_yarn_costing(){
         var sum = 0;
         var sumprocess=0
+
+        update_warp_total();
+        update_weft_total();
 
         $('.attri').each(function(){
             //var sum = 0;
@@ -1393,7 +1405,7 @@ $(document).ready(function() {
             $(this).find('.tot_wastage_cost').val(wastage_amt);            
             $(this).find('.final_costing').val(final_cost.toFixed(2));
         });       
-        update_warp_total();
+         update_warp_total();
         update_weft_total();
     }
 
