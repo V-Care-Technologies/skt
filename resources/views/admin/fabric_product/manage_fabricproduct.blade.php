@@ -1391,7 +1391,7 @@ $(document).ready(function() {
             $(this).find('.tot_labour_cost').val($(this).find('.labour_cost').val());
             $(this).find('.tot_process_cost').val(process_cost);
             $(this).find('.tot_wastage_cost').val(wastage_amt);            
-            $(this).find('.final_costing').val(final_cost);
+            $(this).find('.final_costing').val(final_cost.toFixed(2));
         });       
         update_warp_total();
         update_weft_total();
