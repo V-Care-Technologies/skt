@@ -52,7 +52,7 @@
                         
                         <!-- <li class="item"><a href="#" class="link ">Sales Return</a></li>   -->
                         <li class="item"><a href="#" class="link ">Purchase Return</a></li>  
-                        <li class="item"><a href="" class="link ">Report</a></li>  
+                        <li class="item"><a href="#" class="link ">Report</a></li>  
                     </ul>
                 </li> 
                 <li class="item ">
@@ -97,11 +97,11 @@
                     <ul class="menu-level-2" aria-expanded="false"> 
                         <li class="item"><a href="{{ url('admin/fabricweavervendor') }}" class="link  pt-lg-0 mt-lg-3 @yield('fabric_weaver_vendor_select')">Weaver master</a></li>  
                         <li class="item"><a href="{{ url('admin/fabricproduct') }}" class="link @yield('fabric_product_select')">Product Master</a></li>  
-                        <li class="item"><a href="fabric_po_form.html" class="link ">PO Form</a></li>    
-                        <li class="item"><a href="fabric_inward.html" class="link ">Inward</a></li>    
-                        <li class="item"><a href="fabric_sales_return.html" class="link ">Sales Return</a></li>    
-                        <li class="item"><a href="fabric_purchase_return.html" class="link ">Purchase Return</a></li>     
-                        <li class="item"><a href="" class="link ">Report</a></li>    
+                        <li class="item"><a href="#" class="link ">PO Form</a></li>    
+                        <li class="item"><a href="#" class="link ">Inward</a></li>    
+                        <li class="item"><a href="#" class="link ">Sales Return</a></li>    
+                        <li class="item"><a href="#" class="link ">Purchase Return</a></li>     
+                        <li class="item"><a href="#" class="link ">Report</a></li>    
                     </ul>
                 </li>  
                 <li class="item @yield('fabric_process_system_select')">
@@ -147,8 +147,8 @@
                         <span>Fabric Job Card</span>
                     </a>
                     <ul class="menu-level-2" aria-expanded="false"> 
-                        <li class="item"><a href="job_card.html" class="link ">Job Card</a></li>  
-                        <li class="item"><a href="sales_order.html" class="link ">Sales Order</a></li>   
+                        <li class="item"><a href="#" class="link ">Job Card</a></li>  
+                        <li class="item"><a href="#" class="link ">Sales Order</a></li>   
                     </ul>
                 </li>    
                 <li class="item @yield('rola_system_select') ">
