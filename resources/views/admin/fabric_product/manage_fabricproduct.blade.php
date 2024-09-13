@@ -1377,7 +1377,7 @@ $(document).ready(function() {
             
             process_cost=sumprocess*(parseFloat($(this).find('.size').val())); 
             $(this).find('.process_cost').val(process_cost.toFixed(2));
-            var tot_cost=process_cost+parseFloat($(this).find('.majuri').val());
+            var tot_cost=process_cost+parseFloat($(this).find('.majuri').val())+parseFloat($(this).find('.total_costing').val());
             $(this).find('.tot_cost').val(tot_cost.toFixed(2));
 
             var wastage_per=parseFloat($(this).find('.wastage_per').val());
@@ -1387,7 +1387,7 @@ $(document).ready(function() {
 
             var final_cost=parseFloat(wastage_amt)+parseFloat(process_cost)+parseFloat(tot_cost)+parseFloat($(this).find('.labour_cost').val());
             
-            $(this).find('.tot_yarn_cost').val(tot_cost.toFixed(2));
+            $(this).find('.tot_yarn_cost').val($(this).find('.total_costing').val());
             $(this).find('.tot_labour_cost').val($(this).find('.labour_cost').val());
             $(this).find('.tot_process_cost').val(process_cost);
             $(this).find('.tot_wastage_cost').val(wastage_amt);            
