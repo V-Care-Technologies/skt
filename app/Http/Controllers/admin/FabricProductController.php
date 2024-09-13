@@ -76,6 +76,7 @@ class FabricProductController extends Controller
             $result['id']="0";
             
         }
+        $result['fabric_process_vendors']=DB::table('fabric_process_vendor')->where('is_deleted','0')->where('status','1')->get();
         $result['fabric_types']=DB::table('mst_fabric_type')->where('is_deleted','0')->where('status','1')->get();
         $result['fabric_propertys']=DB::table('mst_fabric_property')->where('is_deleted','0')->where('status','1')->get();
         $result['fabric_process']=DB::table('fabric_process')->where('is_deleted','0')->where('status','1')->get();
