@@ -14,6 +14,8 @@ use App\Http\Controllers\admin\FabricProcessController;
 use App\Http\Controllers\admin\FabricProductController;
 use App\Http\Controllers\admin\FabricWeaverVendorController;
 use App\Http\Controllers\admin\FabricProcessVendorController;
+use App\Http\Controllers\admin\LeadsController;
+use App\Http\Controllers\admin\TasksController;
  
 Route::get('/', function () {
     return view('welcome');
@@ -136,6 +138,22 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/fabricprocessvendor/manage-vendor-process',[FabricProcessVendorController::class,'manage_vendor_process']);
     Route::post('admin/fabricprocessvendor/delete',[FabricProcessVendorController::class,'delete']);
     Route::post('admin/fabricprocessvendor/deletefirm',[FabricProcessVendorController::class,'deletefirm']);
+
+    Route::get('admin/leads',[LeadsController::class,'index']);
+    Route::get('admin/leads/manage-leads',[LeadsController::class,'manage_leads']);
+    Route::get('admin/leads/manage-leads/{id}',[LeadsController::class,'manage_leads']);
+    Route::get('admin/leads/view-leads/{id}',[LeadsController::class,'view_leads']);
+    Route::post('admin/leads/manage-leads-process',[LeadsController::class,'manage_leads_process']);
+    Route::post('admin/leads/delete',[LeadsController::class,'delete']);
+    Route::post('admin/leads/deleteleadslogs',[LeadsController::class,'deleteleadslogs']);
+    Route::post('admin/leads/next-followup',[LeadsController::class,'next_followup']);
+
+    Route::get('admin/tasks',[TasksController::class,'index']);
+    Route::get('admin/tasks/manage-tasks',[TasksController::class,'manage_tasks']);
+    Route::get('admin/tasks/manage-tasks/{id}',[TasksController::class,'manage_tasks']);
+    Route::get('admin/tasks/view-tasks/{id}',[TasksController::class,'view_tasks']);
+    Route::post('admin/tasks/manage-tasks-process',[TasksController::class,'manage_tasks_process']);
+    Route::post('admin/tasks/delete',[TasksController::class,'delete']);
 
     Route::get('admin/logout', function () {
         session()->forget('ADMIN_LOGIN');
